@@ -1,0 +1,89 @@
+import Link from "next/link";
+import { ArrowUpRight, Phone, Mail, MapPin } from "lucide-react";
+import { fullNav, brand } from "@/lib/data/brand";
+
+export function Footer() {
+  return (
+    <footer className="noise relative overflow-hidden bg-cocoa text-cream">
+      <div className="mx-auto max-w-[1600px] px-5 pt-24 pb-10 md:px-10">
+        {/* Oversized CTA */}
+        <div className="mb-20 flex flex-col items-start justify-between gap-10 lg:flex-row lg:items-end">
+          <div>
+            <p className="eyebrow mb-5 text-gold">Taste the difference</p>
+            <p className="text-display max-w-3xl text-[clamp(2.6rem,6.5vw,5.5rem)] text-cream">
+              A handful of health, <span className="text-gold-shimmer">delivered fresh</span> from Lucknow.
+            </p>
+          </div>
+          <Link
+            href="/products"
+            className="group inline-flex h-14 shrink-0 items-center gap-3 rounded-full bg-gold px-9 font-medium text-cocoa transition-all duration-500 ease-(--ease-out-expo) hover:bg-gold-bright hover:shadow-glow-gold"
+          >
+            Shop the collection
+            <ArrowUpRight className="size-4 transition-transform duration-400 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+          </Link>
+        </div>
+
+        <hr className="gold-hairline opacity-40" />
+
+        {/* Link columns */}
+        <div className="grid gap-12 py-16 sm:grid-cols-2 lg:grid-cols-[1.4fr_repeat(4,1fr)]">
+          <div className="max-w-xs">
+            <p className="font-display text-2xl font-semibold">Appu Kaju</p>
+            <p className="eyebrow mt-1 text-[0.6rem] text-cream/50">
+              Since {brand.foundedYear} · {brand.city}
+            </p>
+            <p className="mt-5 text-sm leading-relaxed text-cream/60">
+              A family factory and shop delivering crunchy, healthy, delicious
+              dry fruits across India for over {new Date().getFullYear() - brand.foundedYear} years.
+            </p>
+            <div className="mt-6 space-y-2.5 text-sm text-cream/70">
+              <a href={brand.phoneHref} className="flex items-center gap-2.5 transition-colors hover:text-gold">
+                <Phone className="size-3.5 text-gold" /> {brand.phone}
+              </a>
+              <a href={brand.emailHref} className="flex items-center gap-2.5 transition-colors hover:text-gold">
+                <Mail className="size-3.5 text-gold" /> {brand.email}
+              </a>
+              <p className="flex items-center gap-2.5">
+                <MapPin className="size-3.5 text-gold" /> {brand.city}, {brand.state}
+              </p>
+            </div>
+          </div>
+
+          {fullNav.map((group) => (
+            <nav key={group.heading} aria-label={group.heading}>
+              <p className="eyebrow mb-5 text-gold">{group.heading}</p>
+              <ul className="space-y-3">
+                {group.links.map((link) => (
+                  <li key={link.href + link.label}>
+                    <Link
+                      href={link.href}
+                      className="text-sm text-cream/65 transition-colors duration-300 hover:text-cream"
+                    >
+                      {link.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </nav>
+          ))}
+        </div>
+
+        {/* Giant wordmark */}
+        <div aria-hidden className="pointer-events-none select-none overflow-hidden">
+          <p className="text-display translate-y-[18%] bg-gradient-to-b from-cream/12 to-cream/0 bg-clip-text text-center text-[clamp(4rem,16vw,15rem)] leading-none text-transparent">
+            APPU&nbsp;KAJU
+          </p>
+        </div>
+
+        <div className="flex flex-col items-center justify-between gap-3 border-t border-cream/10 pt-8 text-xs text-cream/45 sm:flex-row">
+          <p>© {new Date().getFullYear()} {brand.legalName}. All rights reserved.</p>
+          <div className="flex items-center gap-6">
+            <Link href="/privacy" className="transition-colors hover:text-cream">Privacy</Link>
+            <Link href="/terms" className="transition-colors hover:text-cream">Terms</Link>
+            <Link href="/faq" className="transition-colors hover:text-cream">FAQ</Link>
+          </div>
+        </div>
+      </div>
+    </footer>
+  );
+}

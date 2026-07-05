@@ -39,3 +39,6 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# image fetch markers (regenerate with: node scripts/fetch-images.mjs)
+/scripts/.image-cache/

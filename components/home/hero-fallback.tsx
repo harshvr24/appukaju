@@ -1,8 +1,10 @@
 import Link from "next/link";
 import Image from "next/image";
 import { ingredients } from "@/lib/data/ingredients";
+import { products } from "@/lib/data/products";
 import { brand } from "@/lib/data/brand";
 import { Button } from "@/components/ui/button";
+import { BenefitIcon } from "./benefit-icon";
 
 /**
  * Static hero for reduced-motion users: the packet and its six treasures,
@@ -60,7 +62,9 @@ export function HeroFallback() {
             <ul className="mt-4 space-y-2.5">
               {ing.benefits.map((b) => (
                 <li key={b.title} className="flex gap-3 text-sm">
-                  <span aria-hidden className="mt-1.5 size-1.5 shrink-0 rounded-full bg-terracotta" />
+                  <span className="mt-0.5 grid size-6 shrink-0 place-items-center rounded-full bg-terracotta/12 text-terracotta">
+                    <BenefitIcon title={b.title} className="size-3.5" />
+                  </span>
                   <span>
                     <strong className="font-medium">{b.title}.</strong>{" "}
                     <span className="text-chocolate/60">{b.detail}</span>
@@ -68,6 +72,16 @@ export function HeroFallback() {
                 </li>
               ))}
             </ul>
+            <Link
+              href={
+                products.find((p) => p.category === ing.id)
+                  ? `/products/${products.find((p) => p.category === ing.id)!.slug}`
+                  : "/products"
+              }
+              className="mt-5 inline-block text-sm font-medium text-terracotta hover:text-terracotta-deep"
+            >
+              Explore {ing.name} →
+            </Link>
           </article>
         ))}
       </div>

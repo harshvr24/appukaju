@@ -9,9 +9,11 @@ import { ensureGsap } from "@/lib/animation/gsap-config";
 import { EASE_OUT_EXPO } from "@/lib/animation/easings";
 import { usePrefersReducedMotion } from "@/lib/hooks/use-reduced-motion";
 import { ingredients } from "@/lib/data/ingredients";
+import { products } from "@/lib/data/products";
 import { brand } from "@/lib/data/brand";
 import { Button } from "@/components/ui/button";
 import { AmbientParticles } from "@/components/shared/ambient-particles";
+import { BenefitIcon } from "./benefit-icon";
 import { HeroFallback } from "./hero-fallback";
 import type { IngredientId } from "@/types";
 
@@ -40,11 +42,11 @@ const TIMING = {
 
 const BEAT_ORDER: IngredientId[] = [
   "cashew",
+  "dates",
   "almond",
   "walnut",
   "pistachio",
   "raisin",
-  "dates",
 ];
 const BEAT_SPAN = (TIMING.beatsEnd - TIMING.beatsStart) / BEAT_ORDER.length;
 
@@ -197,6 +199,18 @@ export function HeroSection() {
 
     let lastPanel = -2;
     let lastFinale: boolean | null = null;
+    let lastHeaderDark: boolean | null = null;
+
+    // The pinned stage is dark until the finale — keep the header legible.
+    const setHeaderOnDark = (onDark: boolean) => {
+      if (onDark === lastHeaderDark) return;
+      lastHeaderDark = onDark;
+      document.documentElement.style.setProperty(
+        "--header-fg",
+        onDark ? "#f6efe1" : "#2b1d14"
+      );
+    };
+    setHeaderOnDark(true);
 
     const st = ScrollTrigger.create({
       trigger: wrapRef.current,
@@ -206,6 +220,8 @@ export function HeroSection() {
         const p = self.progress;
         const wW = window.innerWidth;
         const wH = window.innerHeight;
+
+        setHeaderOnDark(p < TIMING.finaleStart);
 
         // ── Intro headline fades up and away.
         if (introRef.current) {
@@ -283,6 +299,7 @@ export function HeroSection() {
 
     return () => {
       st.kill();
+      document.documentElement.style.removeProperty("--header-fg");
       for (const v of spawnedMap.values()) {
         v.tweens.forEach((t) => t.kill());
         v.els.forEach((e) => e.remove());
@@ -305,19 +322,19 @@ export function HeroSection() {
     >
       <div
         ref={stageRef}
-        className="noise sticky top-0 h-screen overflow-hidden bg-parchment"
+        className="noise sticky top-0 h-screen overflow-hidden bg-cocoa"
         style={{ perspective: "1200px" }}
       >
-        {/* ── Ambient: warm clay light + drifting dust motes ── */}
+        {/* ── Ambient: warm spotlight on the packet + drifting gold motes ── */}
         <div
           aria-hidden
           className="absolute inset-0"
           style={{
             background:
-              "radial-gradient(85% 60% at 50% 26%, rgb(201 111 74 / 0.09), transparent 64%), radial-gradient(70% 50% at 50% 100%, rgb(46 74 52 / 0.06), transparent 60%)",
+              "radial-gradient(60% 48% at 50% 32%, rgb(201 111 74 / 0.16), transparent 68%), radial-gradient(90% 70% at 50% 40%, rgb(198 161 91 / 0.08), transparent 72%), radial-gradient(120% 90% at 50% 110%, rgb(0 0 0 / 0.5), transparent 60%)",
           }}
         />
-        <AmbientParticles count={14} color="rgb(156 107 63 / 0.45)" />
+        <AmbientParticles count={16} />
 
         {/* ── The landed kernels accumulate here ── */}
         <div ref={nutLayerRef} aria-hidden className="absolute inset-0 z-20" />
@@ -332,7 +349,7 @@ export function HeroSection() {
               <motion.div
                 animate={{ y: [0, -9, 0] }}
                 transition={{ duration: 5.5, repeat: Infinity, ease: "easeInOut" }}
-                className="relative [filter:drop-shadow(0_30px_46px_rgb(28_18_11/0.32))]"
+                className="relative [filter:drop-shadow(0_30px_46px_rgb(0_0_0/0.6))_drop-shadow(0_0_54px_rgb(198_161_91/0.14))]"
               >
                 {/* dark mouth revealed as the lid peels */}
                 <div
@@ -382,7 +399,7 @@ export function HeroSection() {
           >
             Est. {brand.foundedYear} · {brand.city}, India
           </motion.p>
-          <h1 className="text-serif text-[clamp(2.6rem,7vw,5.8rem)] text-chocolate">
+          <h1 className="text-serif text-[clamp(2.6rem,7vw,5.8rem)] text-parchment">
             {"Six treasures.".split(" ").map((w, i) => (
               <span key={i} className="inline-block overflow-hidden align-bottom">
                 <motion.span
@@ -398,7 +415,7 @@ export function HeroSection() {
             <br className="hidden md:block" />
             <span className="inline-block overflow-hidden align-bottom">
               <motion.span
-                className="inline-block text-forest"
+                className="text-gold-shimmer inline-block"
                 initial={{ y: "110%" }}
                 animate={{ y: 0 }}
                 transition={{ delay: 0.68, duration: 1, ease: EASE_OUT_EXPO }}
@@ -411,7 +428,7 @@ export function HeroSection() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 1.15, duration: 1 }}
-            className="mt-6 max-w-md text-base text-chocolate/60 md:text-lg"
+            className="mt-6 max-w-md text-base text-parchment/60 md:text-lg"
           >
             Scroll to open the packet we have spent {years} years perfecting.
           </motion.p>
@@ -420,7 +437,7 @@ export function HeroSection() {
         {/* Scroll cue */}
         <div
           ref={cueRef}
-          className="pointer-events-none absolute inset-x-0 bottom-6 z-40 flex flex-col items-center gap-2.5 text-chocolate/45"
+          className="pointer-events-none absolute inset-x-0 bottom-6 z-40 flex flex-col items-center gap-2.5 text-parchment/45"
         >
           <span className="eyebrow text-[0.6rem]">Scroll to open</span>
           <motion.div
@@ -477,20 +494,20 @@ export function HeroSection() {
                   transition: { duration: 0.7, ease: EASE_OUT_EXPO, delay: 0.12 },
                 }}
                 exit={{ opacity: 0, x: -28, transition: { duration: 0.25 } }}
-                className="rounded-sm border border-forest/15 bg-paper/90 p-6 shadow-soft backdrop-blur-sm md:p-10"
+                className="glass-dark rounded-sm p-6 shadow-soft md:p-10"
               >
                 <p className="index-No text-terracotta">
                   № {panelBeat + 1} / {BEAT_ORDER.length} — Out of the packet
                 </p>
-                <h2 className="text-serif mt-3 text-3xl font-bold text-forest md:text-5xl">
+                <h2 className="text-serif mt-3 text-3xl font-bold text-parchment md:text-5xl">
                   {ingredient.name}
-                  <span className="ml-3 align-middle font-body text-sm font-medium text-chocolate/45 md:text-base">
+                  <span className="ml-3 align-middle font-body text-sm font-medium text-parchment/45 md:text-base">
                     {ingredient.hindiName}
                   </span>
                 </h2>
-                <p className="mt-2 text-sm text-walnut md:text-base">{ingredient.tagline}</p>
+                <p className="mt-2 text-sm text-gold md:text-base">{ingredient.tagline}</p>
 
-                <ul className="mt-4 space-y-2 md:mt-6 md:space-y-3.5">
+                <ul className="mt-4 space-y-2.5 md:mt-6 md:space-y-3.5">
                   {ingredient.benefits.slice(0, 4).map((b, i) => (
                     <motion.li
                       key={b.title}
@@ -502,22 +519,37 @@ export function HeroSection() {
                       }}
                       className="flex gap-3"
                     >
-                      <span aria-hidden className="mt-[0.55rem] size-1.5 shrink-0 rounded-full bg-terracotta" />
-                      <span className="text-sm leading-snug text-chocolate/85 md:text-[0.95rem]">
-                        <strong className="font-semibold text-chocolate">{b.title}.</strong>{" "}
-                        <span className="text-chocolate/55">{b.detail}</span>
+                      <span className="mt-0.5 grid size-6 shrink-0 place-items-center rounded-full bg-terracotta/15 text-terracotta">
+                        <BenefitIcon title={b.title} className="size-3.5" />
+                      </span>
+                      <span className="text-sm leading-snug text-parchment/85 md:text-[0.95rem]">
+                        <strong className="font-semibold text-parchment">{b.title}.</strong>{" "}
+                        <span className="text-parchment/55">{b.detail}</span>
                       </span>
                     </motion.li>
                   ))}
                 </ul>
 
-                <div className="mt-5 flex items-center justify-between border-t border-forest/15 pt-4 md:mt-7">
-                  <p className="text-[0.7rem] text-chocolate/45 md:text-xs">
-                    Origin · {ingredient.origin}
-                  </p>
-                  <p className="text-[0.7rem] font-medium text-terracotta md:text-xs">
-                    {ingredient.nutrition.protein} g protein / 100 g
-                  </p>
+                <div className="mt-5 flex flex-wrap items-center justify-between gap-4 border-t border-parchment/10 pt-4 md:mt-7 md:pt-5">
+                  <div>
+                    <p className="text-[0.7rem] text-parchment/45 md:text-xs">
+                      Origin · {ingredient.origin}
+                    </p>
+                    <p className="mt-1 text-[0.7rem] font-medium text-terracotta md:text-xs">
+                      {ingredient.nutrition.protein} g protein / 100 g
+                    </p>
+                  </div>
+                  <Button asChild size="sm">
+                    <Link
+                      href={
+                        products.find((pr) => pr.category === ingredient.id)
+                          ? `/products/${products.find((pr) => pr.category === ingredient.id)!.slug}`
+                          : "/products"
+                      }
+                    >
+                      Explore {ingredient.name}
+                    </Link>
+                  </Button>
                 </div>
               </motion.aside>
             </motion.div>
@@ -534,7 +566,7 @@ export function HeroSection() {
                 <div key={id} className="flex items-center gap-3">
                   <span
                     className={`block h-px transition-all duration-500 ${
-                      state === "active" ? "w-8 bg-terracotta" : "w-4 bg-chocolate/20"
+                      state === "active" ? "w-8 bg-terracotta" : "w-4 bg-parchment/25"
                     }`}
                   />
                   <span
@@ -542,8 +574,8 @@ export function HeroSection() {
                       state === "active"
                         ? "text-terracotta"
                         : state === "done"
-                          ? "text-chocolate/50"
-                          : "text-chocolate/25"
+                          ? "text-parchment/55"
+                          : "text-parchment/25"
                     }`}
                   >
                     {ing.name}

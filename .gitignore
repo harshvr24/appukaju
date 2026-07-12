@@ -45,5 +45,5 @@ next-env.d.ts
 
 .vercel
 
-# cutout markers (regenerate with: node scripts/make-cutouts.mjs)
-/scripts/.cutout-cache/
+# cinematic markers (regenerate with: node scripts/fetch-cinematic.mjs)
+/scripts/.cinematic-cache/

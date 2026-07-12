@@ -19,20 +19,20 @@ export function HeroFallback() {
           Est. {brand.foundedYear} · {brand.city}, India
         </p>
         <h1 className="text-serif text-[clamp(2.8rem,8vw,6.5rem)]">
-          Six treasures. <span className="text-forest">One honest packet.</span>
+          Six treasures. <span className="text-forest">One family table.</span>
         </h1>
         <p className="mt-8 max-w-xl text-lg text-chocolate/65">
           Six dry fruits. One family factory. {years} years of getting the
           small things right.
         </p>
-        <div className="relative mt-14 w-full max-w-60">
+        <div className="relative mt-14 w-full max-w-3xl overflow-hidden rounded-sm shadow-lift">
           <Image
-            src="/images/cutouts/packet-full.png"
-            alt="Appu Kaju premium dry fruit pouch"
-            width={430}
-            height={1200}
+            src="/images/cinematic/table.webp"
+            alt="Assorted Appu Kaju dry fruits laid out in brass bowls"
+            width={1344}
+            height={768}
             priority
-            className="mx-auto drop-shadow-[0_30px_46px_rgb(28_18_11/0.3)]"
+            className="w-full object-cover"
           />
         </div>
       </div>
@@ -41,16 +41,17 @@ export function HeroFallback() {
         {ingredients.map((ing, i) => (
           <article
             key={ing.id}
-            className="rounded-sm border border-forest/15 bg-paper p-7 shadow-soft"
+            className="overflow-hidden rounded-sm border border-forest/15 bg-paper shadow-soft"
           >
             <Image
-              src={`/images/cutouts/${ing.id}-1.png`}
+              src={`/images/cinematic/${ing.id}.webp`}
               alt={ing.name}
-              width={320}
-              height={320}
-              className="mx-auto h-28 w-auto object-contain drop-shadow-[0_16px_20px_rgb(28_18_11/0.25)]"
+              width={1344}
+              height={768}
+              className="aspect-[4/2.4] w-full object-cover"
             />
-            <p className="index-No mt-5 text-terracotta">
+            <div className="p-7">
+            <p className="index-No text-terracotta">
               № {i + 1} / {ingredients.length}
             </p>
             <h2 className="text-serif mt-1 text-2xl font-bold text-forest">
@@ -82,6 +83,7 @@ export function HeroFallback() {
             >
               Explore {ing.name} →
             </Link>
+            </div>
           </article>
         ))}
       </div>

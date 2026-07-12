@@ -12,18 +12,82 @@ import { ingredients } from "@/lib/data/ingredients";
 import { products } from "@/lib/data/products";
 import { brand } from "@/lib/data/brand";
 import { Button } from "@/components/ui/button";
+import { AmbientParticles } from "@/components/shared/ambient-particles";
 import { BenefitIcon } from "./benefit-icon";
+import { ParticleLogo } from "./particle-logo";
 import { HeroFallback } from "./hero-fallback";
 import type { IngredientId } from "@/types";
 
 /**
- * The cinematic "table film" hero. One pinned scroll plays eight full-bleed
- * photographic scenes — an opening table spread, six ingredient close-ups,
- * and the Premium Mix finale — as a slow crossfading film with Ken Burns
- * drift and editorial serif captions. No cutouts, no 3D: every frame is a
- * whole photograph, so nothing can fringe, clip or crash.
+ * "The Appu Story" — a pinned cinematic prologue. Seven full-bleed
+ * photographic beats crossfade like a film: a golden forest dawn, Appu the
+ * elephant, leaves becoming dry fruits, the gift box, the orchard inside
+ * the pouch, the harvest table, and a golden-particle logo finale that
+ * hands off into the catalogue. Every frame is a whole photograph and the
+ * finale is Canvas 2D — no cutouts, no WebGL, nothing that can fringe or
+ * crash.
  */
-const ORDER: IngredientId[] = [
+interface Beat {
+  image: string;
+  kind: "intro" | "story" | "harvest" | "finale";
+  eyebrow?: string;
+  line?: string;
+  sub?: string;
+  /** Renders the serif brand plaque (the unlabeled pouch's "label"). */
+  plaque?: boolean;
+}
+
+const BEATS: Beat[] = [
+  {
+    image: "/images/story/dawn.webp",
+    kind: "intro",
+    line: "In the old forests, patience grows.",
+  },
+  {
+    image: "/images/story/appu.webp",
+    kind: "story",
+    eyebrow: "The elder",
+    line: "Meet Appu.",
+    sub: "Wisdom walks slowly. So do we — since 1998.",
+  },
+  {
+    image: "/images/story/offering.webp",
+    kind: "story",
+    eyebrow: "The offering",
+    line: "Nature offers. We only gather.",
+    sub: "No shortcuts, no seasons skipped, nothing forced.",
+  },
+  {
+    image: "/images/story/gift.webp",
+    kind: "story",
+    eyebrow: "The gift",
+    line: "Handpicked. Handpacked.",
+    sub: "From the orchard to a sealed pouch within hours.",
+    plaque: true,
+  },
+  {
+    image: "/images/story/orchard.webp",
+    kind: "story",
+    eyebrow: "Inside",
+    line: "Inside every pouch, an orchard.",
+    sub: "Cashew trees, almond branches, pistachio clusters, sun-sweet vines.",
+  },
+  {
+    image: "/images/cinematic/table.webp",
+    kind: "harvest",
+    eyebrow: "The harvest",
+    line: "Six treasures. One table.",
+  },
+  {
+    image: "/images/cinematic/mix.webp",
+    kind: "finale",
+  },
+];
+
+const N = BEATS.length;
+const SPAN = 1 / N;
+
+const HARVEST_ORDER: IngredientId[] = [
   "cashew",
   "dates",
   "almond",
@@ -31,11 +95,6 @@ const ORDER: IngredientId[] = [
   "pistachio",
   "raisin",
 ];
-
-/** Scene image names in play order (files in /public/images/cinematic). */
-const SCENES = ["table", ...ORDER, "mix"] as const;
-const N = SCENES.length;
-const SPAN = 1 / N;
 
 const smoothstep = (e0: number, e1: number, x: number) => {
   const t = Math.min(1, Math.max(0, (x - e0) / (e1 - e0)));
@@ -45,20 +104,28 @@ const smoothstep = (e0: number, e1: number, x: number) => {
 const productFor = (id: IngredientId) =>
   products.find((p) => p.category === id);
 
+const captionIn = (delay: number) => ({
+  initial: { opacity: 0, y: 26 },
+  animate: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.7, ease: EASE_OUT_EXPO, delay },
+  },
+});
+
 export function HeroSection() {
   const wrapRef = useRef<HTMLElement>(null);
-  const sceneRefs = useRef<(HTMLDivElement | null)[]>([]);
-  const [scene, setScene] = useState(0);
+  const beatRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const [beat, setBeat] = useState(0);
   const reduced = usePrefersReducedMotion();
 
   useEffect(() => {
     if (reduced || !wrapRef.current) return;
     const { gsap, ScrollTrigger } = ensureGsap();
 
-    let lastScene = -1;
+    let lastBeat = -1;
     let lastHeaderDark: boolean | null = null;
 
-    // The film is dark for the whole pin — keep the header legible.
     const setHeaderOnDark = (onDark: boolean) => {
       if (onDark === lastHeaderDark) return;
       lastHeaderDark = onDark;
@@ -77,10 +144,8 @@ export function HeroSection() {
         const p = self.progress;
         setHeaderOnDark(p < 0.97);
 
-        // Later scenes fade in over earlier ones; every visible scene
-        // drifts with a slow Ken Burns zoom.
         for (let i = 0; i < N; i++) {
-          const el = sceneRefs.current[i];
+          const el = beatRefs.current[i];
           if (!el) continue;
           const start = i * SPAN;
           const opacity = i === 0 ? 1 : smoothstep(start - 0.03, start + 0.015, p);
@@ -92,11 +157,10 @@ export function HeroSection() {
           });
         }
 
-        // React state only at scene boundaries.
         const idx = Math.min(N - 1, Math.floor(p / SPAN));
-        if (idx !== lastScene) {
-          lastScene = idx;
-          setScene(idx);
+        if (idx !== lastBeat) {
+          lastBeat = idx;
+          setBeat(idx);
         }
       },
     });
@@ -109,30 +173,28 @@ export function HeroSection() {
 
   if (reduced) return <HeroFallback />;
 
-  const ingredient = scene >= 1 && scene <= ORDER.length
-    ? ingredients.find((i) => i.id === ORDER[scene - 1])!
-    : null;
+  const current = BEATS[beat];
   const years = new Date().getFullYear() - brand.foundedYear;
 
   return (
     <section
       ref={wrapRef}
-      className="relative h-[640vh]"
-      aria-label="The Appu Kaju story"
+      className="relative h-[700vh]"
+      aria-label="The Appu story"
     >
       <div className="noise sticky top-0 h-screen overflow-hidden bg-cocoa">
-        {/* ── The film: stacked full-bleed scenes ── */}
-        {SCENES.map((name, i) => (
+        {/* ── The film ── */}
+        {BEATS.map((b, i) => (
           <div
-            key={name}
+            key={b.image}
             ref={(el) => {
-              sceneRefs.current[i] = el;
+              beatRefs.current[i] = el;
             }}
             className="absolute inset-0 will-change-transform"
             style={{ opacity: i === 0 ? 1 : 0 }}
           >
             <Image
-              src={`/images/cinematic/${name}.webp`}
+              src={b.image}
               alt=""
               fill
               sizes="100vw"
@@ -142,66 +204,58 @@ export function HeroSection() {
           </div>
         ))}
 
-        {/* ── Legibility scrim ── */}
+        {/* ── Legibility scrim + floating dust ── */}
         <div
           aria-hidden
-          className="absolute inset-0 bg-gradient-to-t from-cocoa/90 via-cocoa/30 to-cocoa/40"
+          className="absolute inset-0 bg-gradient-to-t from-cocoa/90 via-cocoa/25 to-cocoa/40"
         />
+        <AmbientParticles count={14} />
 
-        {/* ── Opening title ── */}
         <AnimatePresence mode="wait">
-          {scene === 0 && (
+          {/* ── Beat 1: opening title ── */}
+          {current.kind === "intro" && (
             <motion.div
               key="intro"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1, transition: { duration: 0.3 } }}
-              exit={{ opacity: 0, y: -40, transition: { duration: 0.35 } }}
-              className="absolute inset-x-0 bottom-[14vh] z-10 flex flex-col items-center px-6 text-center"
+              exit={{ opacity: 0, y: -36, transition: { duration: 0.35 } }}
+              className="absolute inset-0 z-10 flex flex-col items-center justify-center px-6 text-center"
             >
               <motion.p
                 initial={{ opacity: 0, y: 18 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.3, duration: 0.9, ease: EASE_OUT_EXPO }}
-                className="eyebrow mb-5 text-terracotta"
+                className="eyebrow mb-6 text-terracotta"
               >
-                Est. {brand.foundedYear} · {brand.city}, India
+                Appu Kaju · Est. {brand.foundedYear}
               </motion.p>
-              <h1 className="text-serif text-[clamp(2.6rem,7vw,5.8rem)] text-parchment">
-                <span className="inline-block overflow-hidden align-bottom">
-                  <motion.span
-                    className="inline-block"
-                    initial={{ y: "110%" }}
-                    animate={{ y: 0 }}
-                    transition={{ delay: 0.45, duration: 1, ease: EASE_OUT_EXPO }}
-                  >
-                    Six treasures.
-                  </motion.span>
-                </span>{" "}
-                <br className="hidden md:block" />
-                <span className="inline-block overflow-hidden align-bottom">
-                  <motion.span
-                    className="text-gold-shimmer inline-block"
-                    initial={{ y: "110%" }}
-                    animate={{ y: 0 }}
-                    transition={{ delay: 0.68, duration: 1, ease: EASE_OUT_EXPO }}
-                  >
-                    One family table.
-                  </motion.span>
-                </span>
+              <h1 className="text-serif max-w-4xl text-[clamp(2.4rem,6vw,5.2rem)] text-parchment">
+                {"In the old forests, patience grows.".split(" ").map((w, i) => (
+                  <span key={i} className="inline-block overflow-hidden align-bottom">
+                    <motion.span
+                      className="inline-block"
+                      initial={{ y: "110%" }}
+                      animate={{ y: 0 }}
+                      transition={{ delay: 0.45 + i * 0.06, duration: 1, ease: EASE_OUT_EXPO }}
+                    >
+                      {w}&nbsp;
+                    </motion.span>
+                  </span>
+                ))}
               </h1>
               <motion.p
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-                transition={{ delay: 1.15, duration: 1 }}
-                className="mt-6 max-w-md text-base text-parchment/65 md:text-lg"
+                transition={{ delay: 1.2, duration: 1 }}
+                className="mt-6 max-w-md text-base text-parchment/60 md:text-lg"
               >
-                Scroll through what {years} years of obsession taste like.
+                A short story, {years} years in the making.
               </motion.p>
               <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-                transition={{ delay: 1.5, duration: 1 }}
-                className="mt-10 flex flex-col items-center gap-2.5 text-parchment/45"
+                transition={{ delay: 1.6, duration: 1 }}
+                className="absolute bottom-8 flex flex-col items-center gap-2.5 text-parchment/45"
               >
                 <span className="eyebrow text-[0.6rem]">Scroll</span>
                 <motion.div
@@ -214,92 +268,112 @@ export function HeroSection() {
             </motion.div>
           )}
 
-          {/* ── Ingredient captions ── */}
-          {ingredient && (
+          {/* ── Story beats: minimal lower-third captions ── */}
+          {current.kind === "story" && (
             <motion.div
-              key={ingredient.id}
+              key={current.image}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1, transition: { duration: 0.25 } }}
+              exit={{ opacity: 0, transition: { duration: 0.25 } }}
+              className="absolute inset-x-0 bottom-0 z-10 mx-auto max-w-[1600px] px-5 pb-12 md:px-12 md:pb-20"
+            >
+              <div className="max-w-2xl">
+                <motion.p {...captionIn(0.05)} className="index-No text-terracotta">
+                  {current.eyebrow}
+                </motion.p>
+                <motion.h2
+                  {...captionIn(0.14)}
+                  className="text-serif mt-2 text-4xl font-bold text-parchment md:text-6xl"
+                >
+                  {current.line}
+                </motion.h2>
+                {current.sub && (
+                  <motion.p
+                    {...captionIn(0.24)}
+                    className="mt-3 max-w-lg text-sm text-parchment/65 md:text-base"
+                  >
+                    {current.sub}
+                  </motion.p>
+                )}
+                {current.plaque && (
+                  <motion.div
+                    {...captionIn(0.38)}
+                    className="mt-6 inline-block border border-gold/40 px-6 py-4 text-center"
+                  >
+                    <p className="text-serif text-xl font-bold tracking-wide text-parchment">
+                      APPU KAJU
+                    </p>
+                    <p className="eyebrow mt-1 text-[0.55rem] text-gold">
+                      Premium Kaju &amp; Dry Fruits · Lucknow
+                    </p>
+                  </motion.div>
+                )}
+              </div>
+            </motion.div>
+          )}
+
+          {/* ── Beat 6: the harvest — six treasures at a glance ── */}
+          {current.kind === "harvest" && (
+            <motion.div
+              key="harvest"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1, transition: { duration: 0.25 } }}
               exit={{ opacity: 0, transition: { duration: 0.25 } }}
               className="absolute inset-x-0 bottom-0 z-10 mx-auto max-w-[1600px] px-5 pb-10 md:px-12 md:pb-16"
             >
-              <div className="max-w-2xl">
-                <motion.p
-                  initial={{ opacity: 0, y: 22 }}
-                  animate={{ opacity: 1, y: 0, transition: { duration: 0.6, ease: EASE_OUT_EXPO, delay: 0.05 } }}
-                  className="index-No text-terracotta"
-                >
-                  № {scene} / {ORDER.length}
-                </motion.p>
-                <motion.h2
-                  initial={{ opacity: 0, y: 26 }}
-                  animate={{ opacity: 1, y: 0, transition: { duration: 0.7, ease: EASE_OUT_EXPO, delay: 0.12 } }}
-                  className="text-serif mt-2 text-4xl font-bold text-parchment md:text-6xl"
-                >
-                  {ingredient.name}
-                  <span className="ml-4 align-middle font-body text-sm font-medium text-parchment/50 md:text-lg">
-                    {ingredient.hindiName}
-                  </span>
-                </motion.h2>
-                <motion.p
-                  initial={{ opacity: 0, y: 22 }}
-                  animate={{ opacity: 1, y: 0, transition: { duration: 0.6, ease: EASE_OUT_EXPO, delay: 0.2 } }}
-                  className="mt-2 text-sm text-gold md:text-base"
-                >
-                  {ingredient.tagline}
-                </motion.p>
-
-                <ul className="mt-5 grid gap-x-8 gap-y-2.5 sm:grid-cols-2 md:mt-7 md:gap-y-3.5">
-                  {ingredient.benefits.slice(0, 4).map((b, i) => (
+              <motion.p {...captionIn(0.05)} className="index-No text-terracotta">
+                {current.eyebrow}
+              </motion.p>
+              <motion.h2
+                {...captionIn(0.12)}
+                className="text-serif mt-2 text-4xl font-bold text-parchment md:text-6xl"
+              >
+                {current.line}
+              </motion.h2>
+              <ul className="mt-6 grid max-w-4xl grid-cols-2 gap-x-6 gap-y-3 sm:grid-cols-3 md:mt-8">
+                {HARVEST_ORDER.map((id, i) => {
+                  const ing = ingredients.find((x) => x.id === id)!;
+                  const product = productFor(id);
+                  return (
                     <motion.li
-                      key={b.title}
-                      initial={{ opacity: 0, x: 24 }}
+                      key={id}
+                      initial={{ opacity: 0, y: 20 }}
                       animate={{
                         opacity: 1,
-                        x: 0,
-                        transition: { delay: 0.3 + i * 0.08, duration: 0.55, ease: EASE_OUT_EXPO },
+                        y: 0,
+                        transition: { delay: 0.25 + i * 0.07, duration: 0.55, ease: EASE_OUT_EXPO },
                       }}
-                      className="flex gap-3"
                     >
-                      <span className="mt-0.5 grid size-6 shrink-0 place-items-center rounded-full bg-terracotta/20 text-terracotta">
-                        <BenefitIcon title={b.title} className="size-3.5" />
-                      </span>
-                      <span className="text-sm leading-snug text-parchment/85">
-                        <strong className="font-semibold text-parchment">{b.title}.</strong>{" "}
-                        <span className="text-parchment/55">{b.detail}</span>
-                      </span>
+                      <Link
+                        href={product ? `/products/${product.slug}` : "/products"}
+                        className="group flex items-center gap-3"
+                      >
+                        <span className="grid size-8 shrink-0 place-items-center rounded-full bg-terracotta/20 text-terracotta transition-colors duration-300 group-hover:bg-terracotta group-hover:text-parchment">
+                          <BenefitIcon title={ing.benefits[0].title} className="size-4" />
+                        </span>
+                        <span>
+                          <span className="text-serif block text-base font-bold text-parchment">
+                            {ing.name}
+                          </span>
+                          <span className="block text-[0.7rem] text-parchment/55">
+                            {ing.benefits[0].title}
+                          </span>
+                        </span>
+                      </Link>
                     </motion.li>
-                  ))}
-                </ul>
-
-                <motion.div
-                  initial={{ opacity: 0, y: 18 }}
-                  animate={{ opacity: 1, y: 0, transition: { delay: 0.55, duration: 0.6, ease: EASE_OUT_EXPO } }}
-                  className="mt-6 flex flex-wrap items-center gap-x-8 gap-y-4 md:mt-8"
-                >
-                  <Button asChild size="sm">
-                    <Link
-                      href={
-                        productFor(ingredient.id)
-                          ? `/products/${productFor(ingredient.id)!.slug}`
-                          : "/products"
-                      }
-                    >
-                      Explore {ingredient.name}
-                    </Link>
-                  </Button>
-                  <p className="text-[0.7rem] text-parchment/45 md:text-xs">
-                    Origin · {ingredient.origin}
-                    <span className="mx-2.5 text-terracotta">·</span>
-                    {ingredient.nutrition.protein} g protein / 100 g
-                  </p>
-                </motion.div>
-              </div>
+                  );
+                })}
+              </ul>
+              <motion.div {...captionIn(0.7)} className="mt-7">
+                <Button asChild size="sm">
+                  <Link href="/products">Explore the collection</Link>
+                </Button>
+              </motion.div>
             </motion.div>
           )}
 
-          {/* ── Finale ── */}
-          {scene === N - 1 && (
+          {/* ── Beat 7: golden-particle logo finale ── */}
+          {current.kind === "finale" && (
             <motion.div
               key="finale"
               initial={{ opacity: 0 }}
@@ -307,73 +381,65 @@ export function HeroSection() {
               exit={{ opacity: 0, transition: { duration: 0.3 } }}
               className="absolute inset-0 z-10"
             >
+              <div aria-hidden className="absolute inset-0 bg-cocoa/70" />
               <div
                 aria-hidden
-                className="absolute inset-0 bg-gradient-to-t from-parchment via-parchment/60 to-transparent"
+                className="absolute inset-x-0 bottom-0 h-[38vh] bg-gradient-to-t from-parchment to-transparent"
               />
-              <motion.div
-                initial={{ opacity: 0, y: 44 }}
-                animate={{
-                  opacity: 1,
-                  y: 0,
-                  transition: { duration: 0.8, ease: EASE_OUT_EXPO, delay: 0.15 },
-                }}
-                className="absolute inset-x-0 bottom-[9vh] flex flex-col items-center px-6 text-center"
-              >
-                <p className="eyebrow mb-4 text-terracotta">The Signature Blend</p>
-                <p className="text-serif text-[clamp(2.4rem,5.5vw,4.8rem)] font-bold text-chocolate">
-                  Appu Premium Mix
-                </p>
-                <p className="mt-4 max-w-md text-sm text-chocolate/65 md:text-base">
-                  All six treasures, in the proportion we serve our own family.
-                </p>
-                <div className="mt-8 flex flex-wrap justify-center gap-4">
+              <div className="absolute inset-0 flex flex-col items-center justify-center px-6 text-center">
+                <div className="h-[24vh] w-full max-w-4xl">
+                  <ParticleLogo active={beat === N - 1} />
+                </div>
+                <motion.p
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1, transition: { delay: 1.8, duration: 1 } }}
+                  className="text-serif mt-2 text-lg text-gold md:text-2xl"
+                >
+                  Nature&rsquo;s Finest. Delivered Fresh.
+                </motion.p>
+                <motion.div
+                  initial={{ opacity: 0, y: 24 }}
+                  animate={{
+                    opacity: 1,
+                    y: 0,
+                    transition: { delay: 2.3, duration: 0.8, ease: EASE_OUT_EXPO },
+                  }}
+                  className="mt-9 flex flex-wrap justify-center gap-4"
+                >
                   <Button asChild size="lg">
-                    <Link href="/products/premium-mix">Shop the Mix</Link>
+                    <Link href="/products/premium-mix">Shop the Premium Mix</Link>
                   </Button>
-                  <Button asChild variant="outline" size="lg" className="text-chocolate">
+                  <Button asChild variant="outline" size="lg" className="text-parchment">
                     <Link href="/products">Explore Collection</Link>
                   </Button>
-                </div>
-              </motion.div>
+                </motion.div>
+              </div>
             </motion.div>
           )}
         </AnimatePresence>
 
-        {/* ── Progress rail (desktop) ── */}
-        {scene >= 1 && scene <= ORDER.length && (
-          <div className="pointer-events-none absolute top-1/2 left-6 z-10 hidden -translate-y-1/2 flex-col gap-4 xl:flex">
-            {ORDER.map((id, i) => {
-              const ing = ingredients.find((x) => x.id === id)!;
-              const state =
-                scene - 1 === i ? "active" : scene - 1 > i ? "done" : "todo";
-              return (
-                <div key={id} className="flex items-center gap-3">
-                  <span
-                    className={`block h-px transition-all duration-500 ${
-                      state === "active" ? "w-8 bg-terracotta" : "w-4 bg-parchment/25"
-                    }`}
-                  />
-                  <span
-                    className={`eyebrow text-[0.58rem] transition-colors duration-500 ${
-                      state === "active"
-                        ? "text-terracotta"
-                        : state === "done"
-                          ? "text-parchment/55"
-                          : "text-parchment/25"
-                    }`}
-                  >
-                    {ing.name}
-                  </span>
-                </div>
-              );
-            })}
-          </div>
-        )}
+        {/* ── Beat dots ── */}
+        <div className="pointer-events-none absolute top-1/2 right-5 z-10 hidden -translate-y-1/2 flex-col gap-3 md:flex">
+          {BEATS.map((b, i) => (
+            <span
+              key={b.image}
+              className={`block size-1.5 rounded-full transition-all duration-500 ${
+                beat === i ? "scale-125 bg-terracotta" : "bg-parchment/30"
+              }`}
+            />
+          ))}
+        </div>
       </div>
 
       {/* Static story for screen readers */}
       <div className="sr-only">
+        <h2>The Appu story</h2>
+        <p>
+          In the old forests, patience grows. Appu, the wise elephant, gathers
+          what nature offers — leaves become cashews and almonds — and brings
+          them as a gift: a handcrafted box holding the Appu Kaju pouch, an
+          orchard inside. Nature&rsquo;s finest, delivered fresh.
+        </p>
         <h2>The ingredient journey</h2>
         {ingredients.map((ing) => (
           <section key={ing.id}>

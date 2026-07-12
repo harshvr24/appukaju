@@ -47,3 +47,6 @@ next-env.d.ts
 
 # cinematic markers (regenerate with: node scripts/fetch-cinematic.mjs)
 /scripts/.cinematic-cache/
+
+# story markers (regenerate with: node scripts/fetch-story.mjs)
+/scripts/.story-cache/

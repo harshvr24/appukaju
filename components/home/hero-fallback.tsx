@@ -19,22 +19,25 @@ export function HeroFallback() {
           Est. {brand.foundedYear} · {brand.city}, India
         </p>
         <h1 className="text-serif text-[clamp(2.8rem,8vw,6.5rem)]">
-          Six treasures. <span className="text-forest">One family table.</span>
+          In the old forests, <span className="text-forest">patience grows.</span>
         </h1>
         <p className="mt-8 max-w-xl text-lg text-chocolate/65">
-          Six dry fruits. One family factory. {years} years of getting the
-          small things right.
+          Appu, the wise elephant, gathers what nature offers. Six dry fruits.
+          One family factory. {years} years of getting the small things right.
         </p>
         <div className="relative mt-14 w-full max-w-3xl overflow-hidden rounded-sm shadow-lift">
           <Image
-            src="/images/cinematic/table.webp"
-            alt="Assorted Appu Kaju dry fruits laid out in brass bowls"
+            src="/images/story/appu.webp"
+            alt="Appu, a majestic Indian elephant, walking through a golden forest at dawn"
             width={1344}
             height={768}
             priority
             className="w-full object-cover"
           />
         </div>
+        <p className="text-serif mt-8 text-lg text-terracotta">
+          Nature&rsquo;s Finest. Delivered Fresh.
+        </p>
       </div>
 
       <div className="mx-auto grid max-w-6xl gap-6 px-5 pb-24 md:grid-cols-2 lg:grid-cols-3">

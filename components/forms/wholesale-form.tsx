@@ -87,7 +87,7 @@ export function WholesaleForm() {
                 className={cn(
                   "cursor-pointer rounded-full border px-5 py-2.5 text-sm font-medium transition-all duration-300",
                   active
-                    ? "border-chocolate bg-chocolate text-cream"
+                    ? "border-forest bg-forest text-parchment"
                     : "border-chocolate/15 text-chocolate/65 hover:border-chocolate/40"
                 )}
               >

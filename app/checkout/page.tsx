@@ -122,9 +122,9 @@ export default function CheckoutPage() {
                 className={cn(
                   "flex items-center gap-2.5 rounded-full px-4 py-2 text-xs font-medium transition-all duration-400",
                   i === step
-                    ? "bg-chocolate text-cream"
+                    ? "bg-forest text-parchment"
                     : i < step
-                      ? "cursor-pointer bg-gold/20 text-walnut"
+                      ? "cursor-pointer bg-terracotta/20 text-walnut"
                       : "bg-chocolate/5 text-chocolate/40"
                 )}
                 aria-current={i === step ? "step" : undefined}
@@ -212,7 +212,7 @@ export default function CheckoutPage() {
                         key={opt.id}
                         className={cn(
                           "flex cursor-pointer items-center gap-5 rounded-3xl border p-6 transition-all duration-400 ease-(--ease-out-expo)",
-                          active ? "border-gold bg-gold/8 shadow-soft" : "border-chocolate/12 hover:border-chocolate/30"
+                          active ? "border-terracotta bg-terracotta/8 shadow-soft" : "border-chocolate/12 hover:border-chocolate/30"
                         )}
                       >
                         <input
@@ -223,7 +223,7 @@ export default function CheckoutPage() {
                           className="sr-only"
                           name="delivery"
                         />
-                        <span className={cn("grid size-12 place-items-center rounded-2xl", active ? "bg-gold text-cocoa" : "bg-chocolate/6 text-chocolate/60")}>
+                        <span className={cn("grid size-12 place-items-center rounded-2xl", active ? "bg-terracotta text-parchment" : "bg-chocolate/6 text-chocolate/60")}>
                           <opt.icon className="size-5" strokeWidth={1.75} />
                         </span>
                         <span className="flex-1">
@@ -273,7 +273,7 @@ export default function CheckoutPage() {
                         key={opt.id}
                         className={cn(
                           "flex cursor-pointer items-center gap-5 rounded-3xl border p-6 transition-all duration-400 ease-(--ease-out-expo)",
-                          active ? "border-gold bg-gold/8 shadow-soft" : "border-chocolate/12 hover:border-chocolate/30"
+                          active ? "border-terracotta bg-terracotta/8 shadow-soft" : "border-chocolate/12 hover:border-chocolate/30"
                         )}
                       >
                         <input
@@ -283,7 +283,7 @@ export default function CheckoutPage() {
                           onChange={() => setPayMethod(opt.id)}
                           className="sr-only"
                         />
-                        <span className={cn("grid size-12 place-items-center rounded-2xl", active ? "bg-gold text-cocoa" : "bg-chocolate/6 text-chocolate/60")}>
+                        <span className={cn("grid size-12 place-items-center rounded-2xl", active ? "bg-terracotta text-parchment" : "bg-chocolate/6 text-chocolate/60")}>
                           <opt.icon className="size-5" strokeWidth={1.75} />
                         </span>
                         <span className="flex-1">

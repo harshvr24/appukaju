@@ -11,6 +11,16 @@ export const clashDisplay = localFont({
   fallback: ["Georgia", "serif"],
 });
 
+export const zodiak = localFont({
+  src: [
+    { path: "../public/fonts/zodiak-400.woff2", weight: "400", style: "normal" },
+    { path: "../public/fonts/zodiak-700.woff2", weight: "700", style: "normal" },
+  ],
+  variable: "--font-zodiak",
+  display: "swap",
+  fallback: ["Georgia", "Times New Roman", "serif"],
+});
+
 export const satoshi = localFont({
   src: [
     { path: "../public/fonts/satoshi-400.woff2", weight: "400", style: "normal" },

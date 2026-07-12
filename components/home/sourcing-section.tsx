@@ -19,7 +19,7 @@ export function SourcingSection() {
   return (
     <section className="relative mx-auto max-w-[1600px] px-5 py-28 md:px-10 md:py-36">
       <SectionHeading
-        eyebrow="How carefully we source"
+        eyebrow="№ 2 — How carefully we source"
         title="Five origins. One obsession."
         description="Every ingredient is bought at its source — at the drying yard, the orchard, the vineyard — never at a commodity market. Our graders travel; middlemen don't."
       />
@@ -35,8 +35,8 @@ export function SourcingSection() {
           >
             <path
               d={INDIA_PATH}
-              fill="rgb(245 179 1 / 0.07)"
-              stroke="rgb(198 161 91 / 0.7)"
+              fill="rgb(46 74 52 / 0.06)"
+              stroke="rgb(46 74 52 / 0.55)"
               strokeWidth="0.5"
             />
             {/* Routes to the Lucknow factory */}
@@ -49,7 +49,7 @@ export function SourcingSection() {
                   y1={farm.coordinates.y}
                   x2={LUCKNOW.coordinates.x}
                   y2={LUCKNOW.coordinates.y}
-                  stroke="rgb(198 161 91 / 0.5)"
+                  stroke="rgb(201 111 74 / 0.55)"
                   strokeWidth="0.35"
                   strokeDasharray="1.6 1.6"
                   initial={{ pathLength: 0, opacity: 0 }}
@@ -73,7 +73,7 @@ export function SourcingSection() {
                   <circle
                     r={isActive ? 3.4 : 2.2}
                     fill="none"
-                    stroke={isActive ? "#e09e00" : "rgb(198 161 91 / 0.5)"}
+                    stroke={isActive ? "#c96f4a" : "rgb(46 74 52 / 0.45)"}
                     strokeWidth="0.35"
                     className="transition-all duration-500"
                   >
@@ -83,7 +83,7 @@ export function SourcingSection() {
                   </circle>
                   <circle
                     r={isFactory ? 1.7 : 1.2}
-                    fill={isActive ? "#f5b301" : isFactory ? "#e09e00" : "#c6a15b"}
+                    fill={isActive ? "#c96f4a" : isFactory ? "#a9552f" : "#2e4a34"}
                     className="transition-colors duration-500"
                   />
                   <text
@@ -120,18 +120,18 @@ export function SourcingSection() {
                 className={cn(
                   "block w-full cursor-pointer rounded-3xl border p-6 text-left transition-all duration-500 ease-(--ease-out-expo)",
                   isActive
-                    ? "border-sunshine/60 bg-white shadow-soft"
+                    ? "border-terracotta/50 bg-paper shadow-soft"
                     : "border-chocolate/10 hover:border-chocolate/25"
                 )}
               >
                 <div className="flex items-baseline justify-between gap-4">
-                  <h3 className="font-display text-xl font-semibold text-chocolate">
+                  <h3 className="text-serif text-xl font-bold text-chocolate">
                     {farm.region}
                     <span className="ml-3 font-body text-xs font-normal text-chocolate/45">
                       {farm.state}
                     </span>
                   </h3>
-                  <span className="eyebrow shrink-0 text-[0.58rem] text-sunshine-deep">
+                  <span className="eyebrow shrink-0 text-[0.58rem] text-terracotta">
                     {farm.crop}
                   </span>
                 </div>

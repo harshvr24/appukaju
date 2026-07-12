@@ -39,7 +39,7 @@ export default function AccountPage() {
         {/* Orders (demo) */}
         <section aria-labelledby="orders-h">
           <h2 id="orders-h" className="mb-6 flex items-center gap-3 font-display text-2xl font-semibold text-chocolate">
-            <Package className="size-5 text-gold" /> Orders
+            <Package className="size-5 text-terracotta" /> Orders
           </h2>
           <div className="rounded-[2rem] border border-dashed border-chocolate/20 p-10 text-center">
             <p className="text-chocolate/60">
@@ -55,7 +55,7 @@ export default function AccountPage() {
         {/* Wishlist */}
         <section aria-labelledby="wishlist-h">
           <h2 id="wishlist-h" className="mb-6 flex items-center gap-3 font-display text-2xl font-semibold text-chocolate">
-            <Heart className="size-5 text-gold" /> Wishlist
+            <Heart className="size-5 text-terracotta" /> Wishlist
             {mounted && wishlist.length > 0 && (
               <span className="text-base font-normal text-chocolate/50">({wishlist.length})</span>
             )}
@@ -79,7 +79,7 @@ export default function AccountPage() {
         {recent.length > 0 && (
           <section aria-labelledby="recent-h">
             <h2 id="recent-h" className="mb-6 flex items-center gap-3 font-display text-2xl font-semibold text-chocolate">
-              <Clock className="size-5 text-gold" /> Recently viewed
+              <Clock className="size-5 text-terracotta" /> Recently viewed
             </h2>
             <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
               {recent.map((p) => (
@@ -91,7 +91,7 @@ export default function AccountPage() {
 
         {/* Sign-in teaser */}
         <section className="rounded-[2rem] bg-cashew p-10 text-center shadow-soft">
-          <span className="mx-auto grid size-14 place-items-center rounded-full bg-gold/15 text-gold">
+          <span className="mx-auto grid size-14 place-items-center rounded-full bg-terracotta/15 text-terracotta">
             <UserRound className="size-6" strokeWidth={1.5} />
           </span>
           <p className="mt-5 font-display text-xl font-semibold text-chocolate">

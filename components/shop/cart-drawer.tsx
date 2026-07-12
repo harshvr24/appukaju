@@ -50,7 +50,7 @@ export function CartDrawer() {
             exit={{ opacity: 0 }}
             transition={{ duration: 0.4 }}
             onClick={() => setCartOpen(false)}
-            className="fixed inset-0 z-[64] cursor-pointer bg-cocoa/50 backdrop-blur-[2px]"
+            className="fixed inset-0 z-[64] cursor-pointer bg-forest-deep/50 backdrop-blur-[2px]"
           />
           <motion.aside
             role="dialog"
@@ -62,9 +62,9 @@ export function CartDrawer() {
             className="glass fixed top-2 right-2 bottom-2 z-[65] flex w-[min(28rem,calc(100vw-1rem))] flex-col overflow-hidden rounded-3xl shadow-lift"
             data-lenis-prevent
           >
-            <div className="flex items-center justify-between border-b border-gold/15 px-6 py-5">
+            <div className="flex items-center justify-between border-b border-forest/15 px-6 py-5">
               <p className="font-display text-lg font-semibold text-chocolate">
-                Your Cart {count > 0 && <span className="text-gold">({count})</span>}
+                Your Cart {count > 0 && <span className="text-terracotta">({count})</span>}
               </p>
               <button
                 type="button"
@@ -78,8 +78,8 @@ export function CartDrawer() {
 
             {items.length === 0 ? (
               <div className="flex flex-1 flex-col items-center justify-center gap-5 px-8 text-center">
-                <div className="grid size-20 place-items-center rounded-full bg-gold/10">
-                  <ShoppingBag className="size-8 text-gold" strokeWidth={1.25} />
+                <div className="grid size-20 place-items-center rounded-full bg-terracotta/10">
+                  <ShoppingBag className="size-8 text-terracotta" strokeWidth={1.25} />
                 </div>
                 <div>
                   <p className="font-display text-xl font-semibold text-chocolate">
@@ -96,7 +96,7 @@ export function CartDrawer() {
             ) : (
               <>
                 {/* Free shipping meter */}
-                <div className="border-b border-gold/15 px-6 py-4">
+                <div className="border-b border-forest/15 px-6 py-4">
                   {freeShippingGap > 0 ? (
                     <p className="text-xs text-chocolate/70">
                       Add <strong className="text-chocolate">{formatINR(freeShippingGap)}</strong> more for free shipping
@@ -168,7 +168,7 @@ export function CartDrawer() {
                                   type="button"
                                   onClick={() => setQuantity(item.productId, item.variantId, item.quantity - 1)}
                                   aria-label="Decrease quantity"
-                                  className="grid size-7 cursor-pointer place-items-center transition-colors hover:text-gold"
+                                  className="grid size-7 cursor-pointer place-items-center transition-colors hover:text-terracotta"
                                 >
                                   <Minus className="size-3" />
                                 </button>
@@ -179,7 +179,7 @@ export function CartDrawer() {
                                   type="button"
                                   onClick={() => setQuantity(item.productId, item.variantId, item.quantity + 1)}
                                   aria-label="Increase quantity"
-                                  className="grid size-7 cursor-pointer place-items-center transition-colors hover:text-gold"
+                                  className="grid size-7 cursor-pointer place-items-center transition-colors hover:text-terracotta"
                                 >
                                   <Plus className="size-3" />
                                 </button>
@@ -195,7 +195,7 @@ export function CartDrawer() {
                   </AnimatePresence>
                 </ul>
 
-                <div className="space-y-4 border-t border-gold/15 px-6 py-5">
+                <div className="space-y-4 border-t border-forest/15 px-6 py-5">
                   <div className="flex items-baseline justify-between">
                     <p className="text-sm text-chocolate/65">Subtotal</p>
                     <p className="font-display text-xl font-semibold tabular-nums text-chocolate">

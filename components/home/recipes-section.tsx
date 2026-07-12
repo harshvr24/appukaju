@@ -11,13 +11,13 @@ export function RecipesSection() {
     <section className="mx-auto max-w-[1600px] px-5 py-28 md:px-10 md:py-36">
       <div className="mb-12 flex flex-wrap items-end justify-between gap-6">
         <SectionHeading
-          eyebrow="From our kitchen"
+          eyebrow="№ 6 — From our kitchen"
           title="What a fresh batch can become."
         />
         <Reveal>
           <Link
             href="/recipes"
-            className="group inline-flex items-center gap-2 text-sm font-medium text-walnut transition-colors hover:text-chocolate"
+            className="group inline-flex items-center gap-2 text-sm font-medium text-terracotta transition-colors hover:text-terracotta-deep"
           >
             All recipes
             <ArrowUpRight className="size-4 transition-transform duration-400 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
@@ -42,7 +42,7 @@ export function RecipesSection() {
             >
               <Link
                 href={`/recipes/${recipe.slug}`}
-                className="group block overflow-hidden rounded-[1.75rem] bg-cashew shadow-soft transition-shadow duration-700 hover:shadow-lift"
+                className="group block overflow-hidden rounded-sm border border-forest/10 bg-paper shadow-soft transition-shadow duration-700 hover:shadow-lift"
               >
                 <ProductVisual
                   src={recipe.image}
@@ -59,7 +59,7 @@ export function RecipesSection() {
                       <Clock className="size-3" /> {recipe.time}
                     </span>
                   </div>
-                  <h3 className="mt-2.5 font-display text-xl font-semibold text-chocolate transition-colors duration-300 group-hover:text-walnut">
+                  <h3 className="text-serif mt-2.5 text-xl font-bold text-chocolate transition-colors duration-300 group-hover:text-forest">
                     {recipe.title}
                   </h3>
                   <p className="mt-2 line-clamp-2 text-sm leading-relaxed text-chocolate/60">

@@ -62,7 +62,7 @@ export default function QualityProcessPage() {
           {CHECKS.map((item, i) => (
             <Reveal key={item.stage} delay={Math.min(i * 0.05, 0.2)}>
               <li className="flex gap-6 rounded-[1.75rem] bg-cashew p-7 shadow-soft md:gap-9 md:p-9">
-                <span className="font-display text-3xl font-semibold text-gold/50 md:text-4xl">
+                <span className="font-display text-3xl font-semibold text-terracotta/50 md:text-4xl">
                   {String(i + 1).padStart(2, "0")}
                 </span>
                 <div>

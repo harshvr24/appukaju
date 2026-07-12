@@ -19,9 +19,13 @@
   --color-sunshine-deep: #e09e00;
   --color-sunshine-soft: #fff3d6;
   --color-paper: #fffdf6;
+  --color-terracotta: #c96f4a;
+  --color-terracotta-deep: #a9552f;
+  --color-parchment: #f6efe1;
 
   /* ── Typography ────────────────────────────────────────── */
   --font-display: var(--font-clash), "Georgia", serif;
+  --font-serif: var(--font-zodiak), "Georgia", "Times New Roman", serif;
   --font-body: var(--font-satoshi), system-ui, sans-serif;
 
   /* ── Motion ────────────────────────────────────────────── */
@@ -37,7 +41,7 @@
 
 /* ── Page-level background morphing (driven by GSAP) ─────── */
 :root {
-  --page-bg: var(--color-paper);
+  --page-bg: var(--color-parchment);
   --page-fg: var(--color-chocolate);
   --header-fg: var(--color-chocolate);
 }
@@ -61,12 +65,12 @@ body {
 }
 
 ::selection {
-  background: var(--color-gold);
-  color: var(--color-cocoa);
+  background: var(--color-terracotta);
+  color: var(--color-parchment);
 }
 
 :focus-visible {
-  outline: 2px solid var(--color-gold);
+  outline: 2px solid var(--color-terracotta);
   outline-offset: 3px;
   border-radius: 2px;
 }
@@ -105,6 +109,44 @@ html.lenis body {
   letter-spacing: -0.02em;
   line-height: 0.95;
   text-wrap: balance;
+}
+
+@utility text-serif {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  letter-spacing: -0.015em;
+  line-height: 1.02;
+  text-wrap: balance;
+}
+
+/* Editorial hairline rule — inherits currentColor at low opacity. */
+@utility rule {
+  height: 1px;
+  border: none;
+  background: currentColor;
+  opacity: 0.18;
+}
+
+/* Magazine drop cap for opening paragraphs. */
+@utility drop-cap {
+  &::first-letter {
+    font-family: var(--font-serif);
+    font-weight: 700;
+    float: left;
+    font-size: 4.4em;
+    line-height: 0.78;
+    padding-right: 0.12em;
+    padding-top: 0.06em;
+    color: var(--color-terracotta);
+  }
+}
+
+/* № section index — small serif numeral with a hanging rule. */
+@utility index-No {
+  font-family: var(--font-serif);
+  font-size: 0.8125rem;
+  letter-spacing: 0.14em;
+  opacity: 0.65;
 }
 
 @utility eyebrow {

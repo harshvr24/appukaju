@@ -90,7 +90,7 @@ export function Header() {
             >
               <ShoppingBag className="size-[1.15rem]" strokeWidth={1.75} />
               {mounted && count > 0 && (
-                <span className="absolute right-1 top-1 grid size-4.5 place-items-center rounded-full bg-gold text-[0.6rem] font-bold text-cocoa">
+                <span className="absolute right-1 top-1 grid size-4.5 place-items-center rounded-full bg-terracotta text-[0.6rem] font-bold text-parchment">
                   {count > 9 ? "9+" : count}
                 </span>
               )}

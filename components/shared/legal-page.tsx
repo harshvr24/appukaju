@@ -23,7 +23,7 @@ export function LegalPage({ eyebrow, title, updated, sections }: LegalPageProps)
           {sections.map((section, i) => (
             <Reveal key={section.heading} delay={Math.min(i * 0.03, 0.1)}>
               <h2 className="mb-4 flex items-baseline gap-4 font-display text-2xl font-semibold text-chocolate">
-                <span className="font-body text-xs text-gold tabular-nums">
+                <span className="font-body text-xs text-terracotta tabular-nums">
                   {String(i + 1).padStart(2, "0")}
                 </span>
                 {section.heading}

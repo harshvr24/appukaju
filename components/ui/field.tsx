@@ -2,7 +2,7 @@ import { forwardRef, type InputHTMLAttributes, type TextareaHTMLAttributes } fro
 import { cn } from "@/lib/utils";
 
 const inputClasses =
-  "w-full rounded-2xl border border-chocolate/15 bg-cream/60 px-5 py-3.5 text-sm text-chocolate placeholder:text-chocolate/35 transition-all duration-300 focus:border-gold focus:bg-cream focus:shadow-soft outline-none";
+  "w-full rounded-2xl border border-chocolate/15 bg-cream/60 px-5 py-3.5 text-sm text-chocolate placeholder:text-chocolate/35 transition-all duration-300 focus:border-terracotta focus:bg-cream focus:shadow-soft outline-none";
 
 interface FieldWrapProps {
   label: string;

@@ -42,3 +42,8 @@ next-env.d.ts
 
 # image fetch markers (regenerate with: node scripts/fetch-images.mjs)
 /scripts/.image-cache/
+
+.vercel
+
+# cutout markers (regenerate with: node scripts/make-cutouts.mjs)
+/scripts/.cutout-cache/

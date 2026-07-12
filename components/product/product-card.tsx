@@ -33,7 +33,7 @@ export function ProductCard({ product, className, size = "default" }: ProductCar
 
   return (
     <TiltCard className={className}>
-      <article className="group relative flex h-full flex-col overflow-hidden rounded-[1.75rem] bg-cashew shadow-soft transition-shadow duration-700 hover:shadow-lift">
+      <article className="group relative flex h-full flex-col overflow-hidden rounded-sm border border-forest/10 bg-paper shadow-soft transition-shadow duration-700 hover:shadow-lift">
         <Link
           href={`/products/${product.slug}`}
           className="absolute inset-0 z-10"
@@ -58,7 +58,7 @@ export function ProductCard({ product, className, size = "default" }: ProductCar
             {product.badges.slice(0, 2).map((badge) => (
               <span
                 key={badge}
-                className="rounded-full bg-cocoa/70 px-3 py-1 text-[0.62rem] font-medium tracking-[0.14em] text-cream uppercase backdrop-blur-sm"
+                className="rounded-full bg-forest/80 px-3 py-1 text-[0.62rem] font-medium tracking-[0.14em] text-parchment uppercase backdrop-blur-sm"
               >
                 {badge}
               </span>
@@ -87,7 +87,7 @@ export function ProductCard({ product, className, size = "default" }: ProductCar
           <p className="eyebrow text-[0.58rem] text-walnut/70">
             {product.line} · {product.category === "mix" ? "Signature Blend" : product.category}
           </p>
-          <h3 className="font-display text-xl font-semibold tracking-tight text-chocolate">
+          <h3 className="text-serif text-xl font-bold tracking-tight text-chocolate">
             {product.name}
           </h3>
           <p className="line-clamp-2 text-sm leading-relaxed text-chocolate/60">
@@ -112,7 +112,7 @@ export function ProductCard({ product, className, size = "default" }: ProductCar
                 if (addRef.current) flyToCart(addRef.current);
               }}
               aria-label={`Add ${product.name} (${firstVariant.label}) to cart`}
-              className="relative z-20 grid size-11 cursor-pointer place-items-center rounded-full bg-chocolate text-cream transition-all duration-400 ease-(--ease-out-expo) hover:bg-gold hover:text-cocoa hover:shadow-glow-gold"
+              className="relative z-20 grid size-11 cursor-pointer place-items-center rounded-full bg-forest text-parchment transition-all duration-400 ease-(--ease-out-expo) hover:bg-terracotta hover:text-parchment"
             >
               <Plus className="size-4.5" strokeWidth={2} />
             </motion.button>

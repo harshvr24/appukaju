@@ -152,7 +152,7 @@ export function ProductDetail({ product }: { product: Product }) {
                     className={cn(
                       "size-4",
                       i < Math.round(product.rating)
-                        ? "fill-gold text-gold"
+                        ? "fill-terracotta text-terracotta"
                         : "text-chocolate/20"
                     )}
                   />
@@ -183,7 +183,7 @@ export function ProductDetail({ product }: { product: Product }) {
                     className={cn(
                       "cursor-pointer rounded-2xl border px-5 py-3 text-left transition-all duration-400 ease-(--ease-out-expo)",
                       active
-                        ? "border-chocolate bg-chocolate text-cream shadow-soft"
+                        ? "border-forest bg-forest text-parchment shadow-soft"
                         : "border-chocolate/15 text-chocolate hover:border-chocolate/40"
                     )}
                   >
@@ -208,7 +208,7 @@ export function ProductDetail({ product }: { product: Product }) {
                   type="button"
                   onClick={() => setQuantity((q) => Math.max(1, q - 1))}
                   aria-label="Decrease quantity"
-                  className="grid size-11 cursor-pointer place-items-center transition-colors hover:text-gold"
+                  className="grid size-11 cursor-pointer place-items-center transition-colors hover:text-terracotta"
                 >
                   <Minus className="size-4" />
                 </button>
@@ -217,7 +217,7 @@ export function ProductDetail({ product }: { product: Product }) {
                   type="button"
                   onClick={() => setQuantity((q) => Math.min(20, q + 1))}
                   aria-label="Increase quantity"
-                  className="grid size-11 cursor-pointer place-items-center transition-colors hover:text-gold"
+                  className="grid size-11 cursor-pointer place-items-center transition-colors hover:text-terracotta"
                 >
                   <Plus className="size-4" />
                 </button>
@@ -248,20 +248,20 @@ export function ProductDetail({ product }: { product: Product }) {
             </div>
             <div className="mt-7 grid gap-3 text-xs text-chocolate/60 sm:grid-cols-3">
               <p className="flex items-center gap-2">
-                <Truck className="size-3.5 text-gold" /> Free shipping over {formatINR(brand.freeShippingThreshold)}
+                <Truck className="size-3.5 text-terracotta" /> Free shipping over {formatINR(brand.freeShippingThreshold)}
               </p>
               <p className="flex items-center gap-2">
-                <ShieldCheck className="size-3.5 text-gold" /> Batch-dated freshness
+                <ShieldCheck className="size-3.5 text-terracotta" /> Batch-dated freshness
               </p>
               <p className="flex items-center gap-2">
-                <RotateCcw className="size-3.5 text-gold" /> 7-day replacement
+                <RotateCcw className="size-3.5 text-terracotta" /> 7-day replacement
               </p>
             </div>
           </Reveal>
 
           {/* Story */}
           <Reveal delay={0.2} className="mt-12">
-            <blockquote className="rounded-3xl border-l-2 border-gold bg-cashew p-7 font-display text-lg leading-relaxed text-chocolate/85 italic md:text-xl">
+            <blockquote className="rounded-3xl border-l-2 border-terracotta bg-cashew p-7 font-display text-lg leading-relaxed text-chocolate/85 italic md:text-xl">
               &ldquo;{product.story}&rdquo;
               <footer className="mt-3 font-body text-xs font-medium tracking-wide text-walnut not-italic">
                 — The Appu Kaju family

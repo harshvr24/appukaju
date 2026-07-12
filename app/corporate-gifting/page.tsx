@@ -57,7 +57,7 @@ export default function CorporateGiftingPage() {
           {PILLARS.map((pillar, i) => (
             <Reveal key={pillar.title} delay={(i % 4) * 0.07}>
               <article className="h-full rounded-[1.75rem] bg-cashew p-7 shadow-soft">
-                <span className="grid size-12 place-items-center rounded-2xl bg-gold/15 text-gold">
+                <span className="grid size-12 place-items-center rounded-2xl bg-terracotta/15 text-terracotta">
                   <pillar.icon className="size-5" strokeWidth={1.75} />
                 </span>
                 <h2 className="mt-5 font-display text-xl font-semibold text-chocolate">
@@ -72,7 +72,7 @@ export default function CorporateGiftingPage() {
 
       {hamper && (
         <section className="mx-auto max-w-[1600px] px-5 pb-24 md:px-10">
-          <div className="noise relative overflow-hidden rounded-[2.5rem] bg-chocolate p-8 md:p-14">
+          <div className="noise relative overflow-hidden rounded-[2.5rem] bg-forest-deep p-8 md:p-14">
             <AmbientParticles count={14} />
             <div className="relative grid items-center gap-10 lg:grid-cols-2">
               <div>
@@ -111,7 +111,7 @@ export default function CorporateGiftingPage() {
             <ProductCard key={p.id} product={p} />
           ))}
         </div>
-        <Reveal className="mt-14 rounded-[2rem] bg-gold/10 p-8 text-center md:p-10">
+        <Reveal className="mt-14 rounded-[2rem] bg-terracotta/10 p-8 text-center md:p-10">
           <p className="font-display text-xl font-semibold text-chocolate md:text-2xl">
             Planning something bigger?
           </p>

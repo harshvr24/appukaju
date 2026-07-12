@@ -21,12 +21,20 @@ export function PageHero({ eyebrow, title, lede, align = "left", className }: Pa
       )}
     >
       <Reveal>
-        <p className="eyebrow mb-5 text-walnut">{eyebrow}</p>
+        <div
+          className={cn(
+            "mb-5 flex items-center gap-5",
+            align === "center" && "justify-center"
+          )}
+        >
+          <p className="eyebrow text-terracotta">{eyebrow}</p>
+          {align === "left" && <hr className="rule max-w-40 flex-1" />}
+        </div>
       </Reveal>
       <TextReveal
         as="h1"
         className={cn(
-          "text-display max-w-4xl text-[clamp(2.6rem,6vw,5rem)] text-chocolate",
+          "text-serif max-w-4xl text-[clamp(2.6rem,6vw,5rem)] text-chocolate",
           align === "center" && "mx-auto"
         )}
       >

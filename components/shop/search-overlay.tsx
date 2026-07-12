@@ -78,7 +78,7 @@ export function SearchOverlay() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1, transition: { duration: 0.3 } }}
           exit={{ opacity: 0, transition: { duration: 0.25 } }}
-          className="fixed inset-0 z-[66] flex items-start justify-center bg-cocoa/60 px-4 pt-[12vh] backdrop-blur-md"
+          className="fixed inset-0 z-[66] flex items-start justify-center bg-forest-deep/60 px-4 pt-[12vh] backdrop-blur-md"
           onClick={(e) => e.target === e.currentTarget && setSearchOpen(false)}
         >
           <motion.div
@@ -92,8 +92,8 @@ export function SearchOverlay() {
             exit={{ y: 20, opacity: 0, transition: { duration: 0.2 } }}
             className="glass w-full max-w-2xl overflow-hidden rounded-3xl shadow-lift"
           >
-            <div className="flex items-center gap-4 border-b border-gold/15 px-6 py-5">
-              <Search className="size-5 shrink-0 text-gold" strokeWidth={1.75} />
+            <div className="flex items-center gap-4 border-b border-forest/15 px-6 py-5">
+              <Search className="size-5 shrink-0 text-terracotta" strokeWidth={1.75} />
               <input
                 ref={inputRef}
                 value={query}
@@ -122,7 +122,7 @@ export function SearchOverlay() {
                         key={term}
                         type="button"
                         onClick={() => setQuery(term)}
-                        className="cursor-pointer rounded-full border border-chocolate/15 px-4 py-1.5 text-sm text-chocolate/70 transition-colors hover:border-gold hover:text-chocolate"
+                        className="cursor-pointer rounded-full border border-chocolate/15 px-4 py-1.5 text-sm text-chocolate/70 transition-colors hover:border-terracotta hover:text-chocolate"
                       >
                         {term}
                       </button>
@@ -142,7 +142,7 @@ export function SearchOverlay() {
                         <Link
                           key={p.id}
                           href={`/products/${p.slug}`}
-                          className="flex items-center gap-4 rounded-2xl px-3 py-2.5 transition-colors hover:bg-gold/10"
+                          className="flex items-center gap-4 rounded-2xl px-3 py-2.5 transition-colors hover:bg-terracotta/10"
                         >
                           <ProductVisual
                             src={p.image}
@@ -169,10 +169,10 @@ export function SearchOverlay() {
                         <Link
                           key={r.id}
                           href={`/recipes/${r.slug}`}
-                          className="flex items-center justify-between gap-4 rounded-2xl px-3 py-2.5 transition-colors hover:bg-gold/10"
+                          className="flex items-center justify-between gap-4 rounded-2xl px-3 py-2.5 transition-colors hover:bg-terracotta/10"
                         >
                           <p className="text-sm font-medium text-chocolate">{r.title}</p>
-                          <ArrowUpRight className="size-4 text-gold" />
+                          <ArrowUpRight className="size-4 text-terracotta" />
                         </Link>
                       ))}
                     </>

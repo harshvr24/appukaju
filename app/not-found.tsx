@@ -4,7 +4,7 @@ import { AmbientParticles } from "@/components/shared/ambient-particles";
 
 export default function NotFound() {
   return (
-    <div className="noise relative grid min-h-screen place-items-center overflow-hidden bg-cocoa px-5 text-center text-cream">
+    <div className="noise relative grid min-h-screen place-items-center overflow-hidden bg-forest-deep px-5 text-center text-cream">
       <AmbientParticles count={16} />
       <div className="relative">
         {/* Floating cashew crescent */}

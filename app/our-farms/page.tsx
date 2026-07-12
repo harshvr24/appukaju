@@ -21,7 +21,7 @@ export default function FarmsPage() {
         lede="No commodity markets, no consolidators, no 'imported premium mix' of unknown provenance. Five origins, visited every season, bought at the source."
       />
 
-      <ThemeZone bg="#fff6dd" fg="#2b1d14">
+      <ThemeZone bg="#f6efe1" fg="#2b1d14">
         <SourcingSection />
       </ThemeZone>
 

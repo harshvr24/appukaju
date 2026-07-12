@@ -22,24 +22,24 @@ export default function HomePage() {
     <>
       <HeroSection />
 
-      <ThemeZone bg="#fffdf6" fg="#2b1d14">
+      <ThemeZone bg="#f6efe1" fg="#2b1d14">
         <LegacySection />
       </ThemeZone>
 
-      <ThemeZone bg="#fff6dd" fg="#2b1d14">
+      <ThemeZone bg="#fffdf6" fg="#2b1d14">
         <SourcingSection />
       </ThemeZone>
 
-      <ThemeZone bg="#fffdf6" fg="#2b1d14">
+      <ThemeZone bg="#f6efe1" fg="#2b1d14">
         <CraftSection />
         <FeaturedSection />
       </ThemeZone>
 
-      <ThemeZone bg="#fff8e8" fg="#2b1d14">
+      <ThemeZone bg="#efe6d2" fg="#2b1d14">
         <TestimonialsSection />
       </ThemeZone>
 
-      <ThemeZone bg="#fffdf6" fg="#2b1d14">
+      <ThemeZone bg="#f6efe1" fg="#2b1d14">
         <RecipesSection />
         <CtaSection />
       </ThemeZone>

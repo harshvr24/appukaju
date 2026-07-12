@@ -56,7 +56,7 @@ export default function ContactPage() {
                   rel={ch.href.startsWith("http") ? "noopener noreferrer" : undefined}
                   className="group flex items-center gap-5 rounded-[1.75rem] bg-cashew p-6 shadow-soft transition-all duration-500 hover:shadow-lift"
                 >
-                  <span className="grid size-13 shrink-0 place-items-center rounded-2xl bg-gold/15 text-gold transition-colors duration-400 group-hover:bg-gold group-hover:text-cocoa">
+                  <span className="grid size-13 shrink-0 place-items-center rounded-2xl bg-terracotta/15 text-terracotta transition-colors duration-400 group-hover:bg-terracotta group-hover:text-parchment">
                     <ch.icon className="size-5" strokeWidth={1.75} />
                   </span>
                   <span>
@@ -75,7 +75,7 @@ export default function ContactPage() {
             <Reveal delay={0.25}>
               <div className="rounded-[1.75rem] border border-chocolate/10 p-6">
                 <p className="flex items-center gap-3 font-display text-lg font-semibold text-chocolate">
-                  <MapPin className="size-5 text-gold" /> The factory shop
+                  <MapPin className="size-5 text-terracotta" /> The factory shop
                 </p>
                 <p className="mt-2.5 text-sm leading-relaxed text-chocolate/65">
                   {brand.city}, {brand.state}, India. Open since {brand.foundedYear}. Call ahead and

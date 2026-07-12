@@ -8,12 +8,12 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        gold: "bg-gold text-cocoa shadow-soft hover:bg-gold-bright hover:shadow-glow-gold",
-        dark: "bg-chocolate text-cream hover:bg-cocoa",
-        cream: "bg-cream text-chocolate hover:bg-cashew",
+        gold: "bg-terracotta text-parchment shadow-soft hover:bg-terracotta-deep",
+        dark: "bg-forest text-parchment hover:bg-forest-deep",
+        cream: "bg-parchment text-forest hover:bg-cream",
         outline:
-          "border border-current bg-transparent text-current hover:bg-gold/10",
-        ghost: "bg-transparent text-current hover:bg-chocolate/5",
+          "border border-current bg-transparent text-current hover:bg-terracotta/10",
+        ghost: "bg-transparent text-current hover:bg-forest/5",
       },
       size: {
         sm: "h-10 rounded-full px-5 text-sm",

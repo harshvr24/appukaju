@@ -6,21 +6,27 @@ import type { Testimonial } from "@/types";
 
 function TestimonialCard({ t }: { t: Testimonial }) {
   return (
-    <figure className="mx-3 flex w-[22rem] shrink-0 flex-col justify-between rounded-3xl border border-gold/25 bg-white p-7 shadow-soft md:w-[26rem]">
-      <div>
+    <figure className="relative mx-3 flex w-[22rem] shrink-0 flex-col justify-between overflow-hidden rounded-sm border border-forest/15 bg-paper p-7 pt-9 shadow-soft md:w-[26rem]">
+      <span
+        aria-hidden
+        className="text-serif pointer-events-none absolute -top-5 left-4 text-[6rem] leading-none font-bold text-terracotta/15"
+      >
+        &ldquo;
+      </span>
+      <div className="relative">
         <div className="flex gap-1" aria-label={`${t.rating} out of 5 stars`}>
           {Array.from({ length: t.rating }).map((_, i) => (
-            <Star key={i} className="size-3.5 fill-sunshine text-sunshine" />
+            <Star key={i} className="size-3.5 fill-terracotta text-terracotta" />
           ))}
         </div>
-        <blockquote className="mt-4 text-[0.95rem] leading-relaxed text-chocolate/85">
+        <blockquote className="text-serif mt-4 text-[1.05rem] leading-relaxed text-chocolate/85">
           &ldquo;{t.quote}&rdquo;
         </blockquote>
       </div>
-      <figcaption className="mt-6 flex items-center gap-3.5 border-t border-gold/15 pt-5">
+      <figcaption className="mt-6 flex items-center gap-3.5 border-t border-forest/10 pt-5">
         <span
           aria-hidden
-          className="grid size-10 place-items-center rounded-full bg-sunshine-soft font-display text-sm font-semibold text-sunshine-deep"
+          className="text-serif grid size-10 place-items-center rounded-full bg-forest/10 text-sm font-bold text-forest"
         >
           {t.name.split(" ").map((n) => n[0]).join("").slice(0, 2)}
         </span>
@@ -42,7 +48,7 @@ export function TestimonialsSection() {
     <section className="py-28 md:py-36">
       <div className="mx-auto max-w-[1600px] px-5 md:px-10">
         <SectionHeading
-          eyebrow="Word of mouth, since 1998"
+          eyebrow="№ 5 — Word of mouth, since 1998"
           title="Families that came back. And back."
           align="center"
         />

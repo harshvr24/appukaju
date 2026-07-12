@@ -23,8 +23,8 @@ export default function CartPage() {
     return (
       <div className="mx-auto grid min-h-[70vh] max-w-xl place-items-center px-5 pt-32 pb-20 text-center">
         <div>
-          <div className="mx-auto mb-6 grid size-20 place-items-center rounded-full bg-gold/10">
-            <ShoppingBag className="size-8 text-gold" strokeWidth={1.25} />
+          <div className="mx-auto mb-6 grid size-20 place-items-center rounded-full bg-terracotta/10">
+            <ShoppingBag className="size-8 text-terracotta" strokeWidth={1.25} />
           </div>
           <h1 className="text-display text-4xl text-chocolate">Your cart is empty</h1>
           <p className="mt-4 text-chocolate/60">
@@ -41,7 +41,7 @@ export default function CartPage() {
   return (
     <div className="mx-auto max-w-6xl px-5 pt-32 pb-24 md:px-10">
       <h1 className="text-display mb-12 text-[clamp(2.2rem,5vw,3.6rem)] text-chocolate">
-        Your cart <span className="text-gold">({count})</span>
+        Your cart <span className="text-terracotta">({count})</span>
       </h1>
 
       <div className="grid gap-12 lg:grid-cols-[1.5fr_1fr]">
@@ -93,7 +93,7 @@ export default function CartPage() {
                           type="button"
                           onClick={() => setQuantity(item.productId, item.variantId, item.quantity - 1)}
                           aria-label="Decrease quantity"
-                          className="grid size-9 cursor-pointer place-items-center transition-colors hover:text-gold"
+                          className="grid size-9 cursor-pointer place-items-center transition-colors hover:text-terracotta"
                         >
                           <Minus className="size-3.5" />
                         </button>
@@ -104,7 +104,7 @@ export default function CartPage() {
                           type="button"
                           onClick={() => setQuantity(item.productId, item.variantId, item.quantity + 1)}
                           aria-label="Increase quantity"
-                          className="grid size-9 cursor-pointer place-items-center transition-colors hover:text-gold"
+                          className="grid size-9 cursor-pointer place-items-center transition-colors hover:text-terracotta"
                         >
                           <Plus className="size-3.5" />
                         </button>

@@ -64,7 +64,7 @@ export function CraftSection() {
     <section ref={sectionRef} className="overflow-hidden py-28 lg:h-screen lg:py-0">
       <div className="mx-auto max-w-[1600px] px-5 md:px-10 lg:flex lg:h-full lg:flex-col lg:justify-center">
         <SectionHeading
-          eyebrow="Manufacturing & quality"
+          eyebrow="№ 3 — Manufacturing & quality"
           title="Slow by choice, small by design."
           className="mb-14 lg:mb-16"
         />
@@ -76,25 +76,25 @@ export function CraftSection() {
           {STEPS.map((step) => (
             <article
               key={step.n}
-              className="group relative flex flex-col justify-between overflow-hidden rounded-[2rem] border border-gold/20 bg-white p-8 text-chocolate shadow-soft transition-shadow duration-700 hover:shadow-lift md:p-12 lg:h-[52vh] lg:w-[34rem] lg:shrink-0"
+              className="group relative flex flex-col justify-between overflow-hidden rounded-sm border border-forest/15 bg-paper p-8 text-chocolate shadow-soft transition-shadow duration-700 hover:shadow-lift md:p-12 lg:h-[52vh] lg:w-[34rem] lg:shrink-0"
             >
               <div>
-                <span className="font-display text-6xl font-semibold text-sunshine/40 transition-colors duration-700 group-hover:text-sunshine md:text-8xl">
+                <span className="text-serif text-6xl font-bold text-terracotta/30 transition-colors duration-700 group-hover:text-terracotta md:text-8xl">
                   {step.n}
                 </span>
-                <h3 className="mt-4 font-display text-2xl font-semibold md:text-3xl">
+                <h3 className="text-serif mt-4 text-2xl font-bold text-forest md:text-3xl">
                   {step.title}
                 </h3>
                 <p className="mt-4 max-w-md text-sm leading-relaxed text-chocolate/65 md:text-base">
                   {step.text}
                 </p>
               </div>
-              <p className="mt-8 border-t border-gold/20 pt-5 text-xs tracking-wide text-sunshine-deep md:text-sm">
+              <p className="mt-8 border-t border-forest/15 pt-5 text-xs tracking-wide text-terracotta md:text-sm">
                 {step.stat}
               </p>
               <div
                 aria-hidden
-                className="absolute -right-16 -bottom-16 size-48 rounded-full bg-sunshine/15 blur-3xl transition-opacity duration-700 group-hover:opacity-100 lg:opacity-0"
+                className="absolute -right-16 -bottom-16 size-48 rounded-full bg-terracotta/10 blur-3xl transition-opacity duration-700 group-hover:opacity-100 lg:opacity-0"
               />
             </article>
           ))}

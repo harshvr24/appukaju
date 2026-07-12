@@ -76,7 +76,7 @@ export default function ConfirmationPage() {
           <motion.span
             key={i}
             aria-hidden
-            className="absolute top-1/2 left-1/2 rounded-full bg-gold-bright"
+            className="absolute top-1/2 left-1/2 rounded-full bg-terracotta"
             style={{ width: p.size, height: p.size }}
             initial={{ x: 0, y: 0, opacity: 1, scale: 0 }}
             animate={{ x: p.x, y: p.y, opacity: 0, scale: 1 }}
@@ -122,7 +122,7 @@ export default function ConfirmationPage() {
         ].map((s, i) => (
           <li key={s.label} className="flex flex-1 flex-col items-center gap-2 text-center">
             <span
-              className={`grid size-12 place-items-center rounded-full ${i === 0 ? "bg-gold text-cocoa" : "bg-chocolate/6 text-chocolate/50"}`}
+              className={`grid size-12 place-items-center rounded-full ${i === 0 ? "bg-terracotta text-parchment" : "bg-chocolate/6 text-chocolate/50"}`}
             >
               <s.icon className="size-5" strokeWidth={1.75} />
             </span>

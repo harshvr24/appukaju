@@ -100,7 +100,7 @@ export default async function RecipePage({
             <ul className="mt-4 space-y-3">
               {recipe.ingredients.map((ing) => (
                 <li key={ing} className="flex gap-3 text-sm leading-snug text-chocolate/75">
-                  <span aria-hidden className="mt-[0.45rem] size-1.5 shrink-0 rounded-full bg-gold" />
+                  <span aria-hidden className="mt-[0.45rem] size-1.5 shrink-0 rounded-full bg-terracotta" />
                   {ing}
                 </li>
               ))}
@@ -114,7 +114,7 @@ export default async function RecipePage({
             {recipe.steps.map((step, i) => (
               <Reveal key={i} delay={Math.min(i * 0.04, 0.16)}>
                 <li className="flex gap-5">
-                  <span className="font-display text-2xl font-semibold text-gold/60">
+                  <span className="font-display text-2xl font-semibold text-terracotta/60">
                     {String(i + 1).padStart(2, "0")}
                   </span>
                   <p className="pt-1 leading-relaxed text-chocolate/75">{step}</p>

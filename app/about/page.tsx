@@ -77,7 +77,7 @@ export default function AboutPage() {
 
       {/* Statement */}
       <section className="mx-auto max-w-[1600px] px-5 pb-24 md:px-10">
-        <div className="noise rounded-[2.5rem] bg-chocolate px-6 py-20 text-center md:py-28">
+        <div className="noise rounded-[2.5rem] bg-forest-deep px-6 py-20 text-center md:py-28">
           <TextReveal
             as="p"
             className="text-display mx-auto max-w-4xl text-[clamp(1.8rem,4vw,3.4rem)] text-cream"
@@ -100,16 +100,16 @@ export default function AboutPage() {
 
       {/* Timeline */}
       <section className="mx-auto max-w-4xl px-5 pb-28 md:px-10" aria-label="Company timeline">
-        <div className="relative border-l border-gold/30 pl-10 md:pl-16">
+        <div className="relative border-l border-terracotta/30 pl-10 md:pl-16">
           {TIMELINE.map((item, i) => (
             <Reveal key={item.year} delay={Math.min(i * 0.05, 0.2)} className="relative pb-14 last:pb-0">
               <span
                 aria-hidden
                 className="absolute top-1.5 -left-10 grid size-4 -translate-x-1/2 place-items-center md:-left-16"
               >
-                <span className="size-2.5 rounded-full bg-gold shadow-glow-gold" />
+                <span className="size-2.5 rounded-full bg-terracotta" />
               </span>
-              <p className="font-display text-3xl font-semibold text-gold md:text-4xl">{item.year}</p>
+              <p className="text-serif text-3xl font-bold text-terracotta md:text-4xl">{item.year}</p>
               <h2 className="mt-2 font-display text-xl font-semibold text-chocolate">{item.title}</h2>
               <p className="mt-2 max-w-xl leading-relaxed text-chocolate/65">{item.text}</p>
             </Reveal>
@@ -123,7 +123,7 @@ export default function AboutPage() {
           {VALUES.map((value, i) => (
             <Reveal key={value.title} delay={(i % 2) * 0.08}>
               <article className="h-full rounded-[2rem] bg-cashew p-9 shadow-soft">
-                <p className="font-display text-4xl font-semibold text-gold/40">
+                <p className="font-display text-4xl font-semibold text-terracotta/40">
                   {String(i + 1).padStart(2, "0")}
                 </p>
                 <h2 className="mt-3 font-display text-2xl font-semibold text-chocolate">

@@ -30,15 +30,15 @@ export function SectionHeading({
       )}
     >
       <Reveal>
-        <p className={cn("eyebrow mb-5", onLight ? "text-walnut" : "text-gold")}>
+        <p className={cn("eyebrow mb-5 text-terracotta")}>
           {eyebrow}
         </p>
       </Reveal>
       <TextReveal
         as="h2"
         className={cn(
-          "text-display text-[clamp(2.2rem,5vw,4.2rem)]",
-          onLight ? "text-chocolate" : "text-cream"
+          "text-serif text-[clamp(2.2rem,5vw,4.2rem)]",
+          onLight ? "text-chocolate" : "text-parchment"
         )}
       >
         {title}
@@ -49,7 +49,7 @@ export function SectionHeading({
             className={cn(
               "mt-6 max-w-2xl text-base leading-relaxed md:text-lg",
               align === "center" && "mx-auto",
-              onLight ? "text-chocolate/65" : "text-cream/65"
+              onLight ? "text-chocolate/65" : "text-parchment/65"
             )}
           >
             {description}

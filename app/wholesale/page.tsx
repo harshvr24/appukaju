@@ -32,7 +32,7 @@ export default function WholesalePage() {
       <section className="mx-auto max-w-[1600px] px-5 pb-24 md:px-10">
         <div className="grid gap-6 lg:grid-cols-3">
           <Reveal className="lg:col-span-2">
-            <div className="noise h-full rounded-[2rem] bg-chocolate p-9 text-cream md:p-12">
+            <div className="noise h-full rounded-[2rem] bg-forest-deep p-9 text-cream md:p-12">
               <p className="eyebrow text-gold">The trade pack</p>
               <h2 className="mt-3 font-display text-3xl font-semibold md:text-4xl">
                 Kuber Kaju · 10 kg

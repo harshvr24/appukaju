@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { clashDisplay, satoshi } from "@/lib/fonts";
+import { clashDisplay, satoshi, zodiak } from "@/lib/fonts";
 import { brand } from "@/lib/data/brand";
 import { LenisProvider } from "@/components/providers/lenis-provider";
 import { Header } from "@/components/layout/header";
@@ -34,7 +34,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#faf6ef",
+  themeColor: "#f6efe1",
   width: "device-width",
   initialScale: 1,
 };
@@ -60,7 +60,7 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={`${clashDisplay.variable} ${satoshi.variable}`}>
+    <html lang="en" className={`${clashDisplay.variable} ${satoshi.variable} ${zodiak.variable}`}>
       <body>
         <script
           type="application/ld+json"

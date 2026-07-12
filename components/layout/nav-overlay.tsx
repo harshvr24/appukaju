@@ -53,19 +53,19 @@ export function NavOverlay() {
             clipPath: "inset(0 0 100% 0)",
             transition: { duration: 0.5, ease: [0.4, 0, 1, 1] },
           }}
-          className="noise fixed inset-0 z-[60] overflow-y-auto bg-cocoa text-cream"
+          className="noise fixed inset-0 z-[60] overflow-y-auto bg-forest-deep text-parchment"
           data-lenis-prevent
         >
           <div className="mx-auto flex min-h-full max-w-[1600px] flex-col px-5 py-6 md:px-10">
             <div className="flex items-center justify-between">
-              <span className="font-display text-xl font-semibold">
+              <span className="text-serif text-xl font-bold">
                 Appu&nbsp;Kaju
               </span>
               <button
                 type="button"
                 onClick={() => setNavOpen(false)}
                 aria-label="Close menu"
-                className="grid size-12 cursor-pointer place-items-center rounded-full border border-cream/20 transition-colors duration-300 hover:border-gold hover:text-gold"
+                className="grid size-12 cursor-pointer place-items-center rounded-full border border-parchment/20 transition-colors duration-300 hover:border-gold hover:text-gold"
               >
                 <X className="size-5" strokeWidth={1.5} />
               </button>
@@ -94,7 +94,7 @@ export function NavOverlay() {
                         <span className="font-body text-xs text-gold">
                           0{i + 1}
                         </span>
-                        <span className="text-display text-[clamp(2.4rem,6vw,4.5rem)] text-cream transition-colors duration-400 group-hover:text-gold">
+                        <span className="text-serif text-[clamp(2.4rem,6vw,4.5rem)] text-parchment transition-colors duration-400 group-hover:text-gold">
                           {link.label}
                         </span>
                       </Link>
@@ -121,7 +121,7 @@ export function NavOverlay() {
                         <li key={link.href + link.label}>
                           <Link
                             href={link.href}
-                            className="text-sm text-cream/70 transition-colors duration-300 hover:text-cream"
+                            className="text-sm text-parchment/70 transition-colors duration-300 hover:text-parchment"
                           >
                             {link.label}
                           </Link>
@@ -136,7 +136,7 @@ export function NavOverlay() {
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1, transition: { delay: 0.6, duration: 0.8 } }}
-              className="flex flex-wrap items-center justify-between gap-4 border-t border-cream/10 py-6 text-sm text-cream/60"
+              className="flex flex-wrap items-center justify-between gap-4 border-t border-parchment/10 py-6 text-sm text-parchment/60"
             >
               <p>
                 {brand.city}, {brand.state} · Since {brand.foundedYear}

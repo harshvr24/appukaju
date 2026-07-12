@@ -82,7 +82,7 @@ export function GalleryGrid({ items }: { items: GalleryItem[] }) {
                   type="button"
                   onClick={() => setOpen(null)}
                   aria-label="Close"
-                  className="grid size-10 cursor-pointer place-items-center rounded-full border border-cream/25 transition-colors hover:border-gold hover:text-gold"
+                  className="grid size-10 cursor-pointer place-items-center rounded-full border border-cream/25 transition-colors hover:border-terracotta hover:text-terracotta"
                 >
                   <X className="size-4" />
                 </button>

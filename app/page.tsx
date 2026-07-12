@@ -8,6 +8,7 @@ import { FeaturedSection } from "@/components/home/featured-section";
 import { TestimonialsSection } from "@/components/home/testimonials-section";
 import { RecipesSection } from "@/components/home/recipes-section";
 import { CtaSection } from "@/components/home/cta-section";
+import { LazySection } from "@/components/shared/lazy-section";
 
 export const metadata: Metadata = {
   title:
@@ -36,11 +37,15 @@ export default function HomePage() {
       </ThemeZone>
 
       <ThemeZone bg="#efe6d2" fg="#2b1d14">
-        <TestimonialsSection />
+        <LazySection>
+          <TestimonialsSection />
+        </LazySection>
       </ThemeZone>
 
       <ThemeZone bg="#f6efe1" fg="#2b1d14">
-        <RecipesSection />
+        <LazySection>
+          <RecipesSection />
+        </LazySection>
         <CtaSection />
       </ThemeZone>
     </>

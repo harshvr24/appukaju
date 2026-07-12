@@ -49,6 +49,22 @@ One pinned 640vh ScrollTrigger plays eight stacked full-bleed photographs (`publ
 
 **Fallback:** `prefers-reduced-motion` renders `hero-fallback.tsx` — the same story as static editorial sections.
 
+### Animation toolkit (`components/shared/` + `lib/animation/`)
+Reusable, reduced-motion-aware building blocks — compose these instead of writing one-off scroll code:
+
+| Utility | What it does | Used on |
+|---|---|---|
+| `LenisProvider` | Smooth scrolling synced to GSAP's ticker (`lib/animation/gsap-config.ts` registers ScrollTrigger once, with `ignoreMobileResize` so pins don't jump when the mobile URL bar collapses) | whole app (`app/layout.tsx`) |
+| `Reveal` | Fade-up on scroll into view | everywhere |
+| `TextReveal` | Masked serif text reveal, word-by-word or per-line | headings site-wide |
+| `Parallax` (`parallax-image.tsx`) | Child drifts slower than scroll for depth | drop-in |
+| `PinSection` | Pins children for N viewport-heights, exposes 0–1 progress via `--pin-progress` CSS var and `onProgress`; desktop-only by default | drop-in (the craft section's horizontal pin predates it) |
+| `VideoScrub` | Pins a `<video>` and scrubs `currentTime` with scroll (rAF-coalesced seeks, iOS play/pause priming); poster fallback for reduced motion | ready — drop an mp4 in `public/` and pass `src` |
+| `LazySection` | `content-visibility` paint skipping (SEO-safe default) or true deferred mounting (`mode="defer"`) | testimonials + recipes on `/` |
+| `Marquee` / `Counter` / `TiltCard` / `Magnetic` / `AmbientParticles` | Micro-interactions | various |
+
+Every utility bails to static content under `prefers-reduced-motion`, and a global CSS gate in `globals.css` hard-caps animation durations as a second layer.
+
 ### Theme morphing
 `ThemeZone` interpolates `--page-bg` / `--page-fg` CSS vars as chapters scroll into view — the page background travels chocolate → cream → forest → cream → chocolate without any section seams.
 

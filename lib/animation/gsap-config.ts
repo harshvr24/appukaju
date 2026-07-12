@@ -10,6 +10,9 @@ export function ensureGsap() {
   if (!registered && typeof window !== "undefined") {
     gsap.registerPlugin(ScrollTrigger);
     gsap.defaults({ ease: "power3.out", duration: 0.9 });
+    // Mobile browsers resize the viewport when the URL bar collapses;
+    // without this, every pinned section re-measures and visibly jumps.
+    ScrollTrigger.config({ ignoreMobileResize: true });
     registered = true;
   }
   return { gsap, ScrollTrigger };

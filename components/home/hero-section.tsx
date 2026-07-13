@@ -18,110 +18,40 @@ import { HeroStatic } from "./hero-static";
 import type { IngredientId } from "@/types";
 
 /**
- * "The Appu Film" — a pinned scroll-controlled brand film. Twelve
- * full-bleed photographic beats play with zoom-through transitions (the
- * active scene pushes toward the viewer and dissolves while the next
- * rises from behind), telling the full journey: rainforest dawn → Appu →
- * the cashew tree → the fruit → harvest → cleaning → inspection →
- * roasting → one perfect kernel → the sealed pouch → the six-treasure
- * table → finale CTA. Every frame is a whole photograph — no WebGL, no
- * cutouts, nothing that can fringe or crash. Reduced-motion users get
- * the static hero instead.
+ * "The Appu Film" — a single continuous MP4 (rendered locally by
+ * scripts/make-film.mjs: Ken-Burns camera pushes + gradual crossfades,
+ * dense keyframes) scrubbed by scroll. One video element, no scene DOM
+ * swaps — scrolling IS the film, forward and backward. Captions are
+ * light overlays synced to the film's timing constants. No WebGL.
  */
+
+/** Must match scripts/make-film.mjs: CLIP 3.2s, FADE 0.9s. */
+const STEP = 2.3;
+const SCENES = 12;
+const TOTAL = SCENES * 3.2 - (SCENES - 1) * 0.9; // 28.5s
+
 interface Beat {
-  image: string;
   kind: "intro" | "story" | "harvest" | "finale";
   eyebrow?: string;
   line?: string;
   sub?: string;
-  /** Renders the serif brand plaque (the unlabeled pouch's "label"). */
   plaque?: boolean;
 }
 
 const BEATS: Beat[] = [
-  {
-    image: "/images/story/dawn.webp",
-    kind: "intro",
-    line: "In the old forests, patience grows.",
-  },
-  {
-    image: "/images/story/appu.webp",
-    kind: "story",
-    eyebrow: "The elder",
-    line: "Meet Appu.",
-    sub: "Wisdom walks slowly. So do we — since 1998.",
-  },
-  {
-    image: "/images/story/tree.webp",
-    kind: "story",
-    eyebrow: "The discovery",
-    line: "He knows the good trees.",
-    sub: "A ripe cashew apple, found the old way.",
-  },
-  {
-    image: "/images/story/fruit.webp",
-    kind: "story",
-    eyebrow: "The fruit",
-    line: "Nature offers. We only gather.",
-    sub: "Ripened slow under a Konkan sun — nothing forced.",
-  },
-  {
-    image: "/images/story/harvest.webp",
-    kind: "story",
-    eyebrow: "№ 1 — The harvest",
-    line: "Bought at the source.",
-    sub: "At the drying yards of the Konkan coast, never at commodity markets.",
-  },
-  {
-    image: "/images/story/cleaning.webp",
-    kind: "story",
-    eyebrow: "№ 2 — The cleaning",
-    line: "Washed. Shade-dried. Same day.",
-    sub: "Freshness is a fact, not a slogan.",
-  },
-  {
-    image: "/images/story/inspection.webp",
-    kind: "story",
-    eyebrow: "№ 3 — The inspection",
-    line: "Graded kernel by kernel.",
-    sub: "Under daylight lamps — machines sort by size, hands sort by honesty.",
-  },
-  {
-    image: "/images/story/roasting.webp",
-    kind: "story",
-    eyebrow: "№ 4 — The roast",
-    line: "Roasted by ear.",
-    sub: "Anwar bhai's 40 kg drum — done when it sounds done.",
-  },
-  {
-    image: "/images/cinematic/cashew.webp",
-    kind: "story",
-    eyebrow: "№ 5 — The kernel",
-    line: "One perfect kernel.",
-    sub: "Buttery, whole, and exactly as nature grew it.",
-  },
-  {
-    image: "/images/story/gift.webp",
-    kind: "story",
-    eyebrow: "№ 6 — The seal",
-    line: "Sealed within hours.",
-    sub: "From the roast to your pouch — batch-dated, always.",
-    plaque: true,
-  },
-  {
-    image: "/images/cinematic/table.webp",
-    kind: "harvest",
-    eyebrow: "The table",
-    line: "Six treasures. One table.",
-  },
-  {
-    image: "/images/cinematic/mix.webp",
-    kind: "finale",
-  },
+  { kind: "intro", line: "In the old forests, patience grows." },
+  { kind: "story", eyebrow: "The elder", line: "Meet Appu.", sub: "Wisdom walks slowly. So do we — since 1998." },
+  { kind: "story", eyebrow: "The discovery", line: "He knows the good trees.", sub: "A ripe cashew apple, found the old way." },
+  { kind: "story", eyebrow: "The fruit", line: "Nature offers. We only gather.", sub: "Ripened slow under a Konkan sun — nothing forced." },
+  { kind: "story", eyebrow: "№ 1 — The harvest", line: "Bought at the source.", sub: "At the drying yards of the Konkan coast, never at commodity markets." },
+  { kind: "story", eyebrow: "№ 2 — The cleaning", line: "Washed. Shade-dried. Same day.", sub: "Freshness is a fact, not a slogan." },
+  { kind: "story", eyebrow: "№ 3 — The inspection", line: "Graded kernel by kernel.", sub: "Under daylight lamps — machines sort by size, hands sort by honesty." },
+  { kind: "story", eyebrow: "№ 4 — The roast", line: "Roasted by ear.", sub: "Anwar bhai's 40 kg drum — done when it sounds done." },
+  { kind: "story", eyebrow: "№ 5 — The kernel", line: "One perfect kernel.", sub: "Buttery, whole, and exactly as nature grew it." },
+  { kind: "story", eyebrow: "№ 6 — The seal", line: "Sealed within hours.", sub: "From the roast to your pouch — batch-dated, always.", plaque: true },
+  { kind: "harvest", eyebrow: "The table", line: "Six treasures. One table." },
+  { kind: "finale" },
 ];
-
-const N = BEATS.length;
-const SPAN = 1 / N;
 
 const HARVEST_ORDER: IngredientId[] = [
   "cashew",
@@ -131,11 +61,6 @@ const HARVEST_ORDER: IngredientId[] = [
   "pistachio",
   "raisin",
 ];
-
-const smoothstep = (e0: number, e1: number, x: number) => {
-  const t = Math.min(1, Math.max(0, (x - e0) / (e1 - e0)));
-  return t * t * (3 - 2 * t);
-};
 
 const productFor = (id: IngredientId) =>
   products.find((p) => p.category === id);
@@ -151,16 +76,21 @@ const captionIn = (delay: number) => ({
 
 export function HeroSection() {
   const wrapRef = useRef<HTMLElement>(null);
-  const beatRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const videoRef = useRef<HTMLVideoElement>(null);
   const [beat, setBeat] = useState(0);
+  const [filmReady, setFilmReady] = useState(false);
   const reduced = usePrefersReducedMotion();
 
   useEffect(() => {
-    if (reduced || !wrapRef.current) return;
-    const { gsap, ScrollTrigger } = ensureGsap();
+    const video = videoRef.current;
+    if (reduced || !wrapRef.current || !video) return;
+    const { ScrollTrigger } = ensureGsap();
 
     let lastBeat = -1;
     let lastHeaderDark: boolean | null = null;
+    let target = 0;
+    let current = 0;
+    let raf = 0;
 
     const setHeaderOnDark = (onDark: boolean) => {
       if (onDark === lastHeaderDark) return;
@@ -172,6 +102,29 @@ export function HeroSection() {
     };
     setHeaderOnDark(true);
 
+    // Ease toward the scroll target so fast flicks don't queue dozens of
+    // seeks; at most one currentTime write per frame.
+    const tick = () => {
+      raf = 0;
+      current += (target - current) * 0.35;
+      if (Math.abs(target - current) < 0.008) current = target;
+      if (video.readyState >= 1 && Number.isFinite(video.duration)) {
+        video.currentTime = current;
+      }
+      if (current !== target) raf = requestAnimationFrame(tick);
+    };
+
+    // iOS only exposes frames for seeking after a play/pause handshake.
+    const prime = () => {
+      video.play().then(() => video.pause()).catch(() => {});
+    };
+    const onReady = () => {
+      setFilmReady(true);
+      prime();
+    };
+    if (video.readyState >= 2) onReady();
+    else video.addEventListener("loadeddata", onReady, { once: true });
+
     const st = ScrollTrigger.create({
       trigger: wrapRef.current,
       start: "top top",
@@ -180,46 +133,12 @@ export function HeroSection() {
         const p = self.progress;
         setHeaderOnDark(p < 0.97);
 
-        // Zoom-through: the active scene (on top) pushes toward the viewer,
-        // blurring and dissolving as the next scene rises from behind.
-        const wide = window.innerWidth >= 1024;
-        for (let i = 0; i < N; i++) {
-          const el = beatRefs.current[i];
-          if (!el) continue;
-          const start = i * SPAN;
-          const t = (p - start) / SPAN;
-          const isFinale = i === N - 1;
+        const dur = Number.isFinite(video.duration) ? video.duration : TOTAL;
+        target = p * Math.max(0, dur - 0.06);
+        if (!raf) raf = requestAnimationFrame(tick);
 
-          if (t < 0) {
-            // Approaching behind the glass of the active scene.
-            const u = Math.min(1, Math.max(0, t + 1));
-            gsap.set(el, {
-              opacity: 1,
-              scale: 0.94 + 0.06 * u,
-              filter: "none",
-              visibility: u <= 0.001 ? "hidden" : "visible",
-            });
-          } else if (t <= 1 || isFinale) {
-            if (isFinale) {
-              gsap.set(el, { opacity: 1, scale: 1, filter: "none", visibility: "visible" });
-            } else {
-              const tc = Math.min(1, t);
-              const zoom = tc * tc; // accelerating push into the frame
-              const opacity = 1 - smoothstep(0.72, 0.98, tc);
-              const blur = wide ? smoothstep(0.6, 1, tc) * 5 : 0;
-              gsap.set(el, {
-                opacity,
-                scale: 1 + zoom * 0.5,
-                filter: blur > 0.05 ? `blur(${blur.toFixed(2)}px)` : "none",
-                visibility: opacity <= 0.001 ? "hidden" : "visible",
-              });
-            }
-          } else {
-            gsap.set(el, { opacity: 0, visibility: "hidden" });
-          }
-        }
-
-        const idx = Math.min(N - 1, Math.floor(p / SPAN));
+        // Captions switch as each crossfade begins.
+        const idx = Math.min(SCENES - 1, Math.floor((p * TOTAL) / STEP));
         if (idx !== lastBeat) {
           lastBeat = idx;
           setBeat(idx);
@@ -229,6 +148,8 @@ export function HeroSection() {
 
     return () => {
       st.kill();
+      if (raf) cancelAnimationFrame(raf);
+      video.removeEventListener("loadeddata", onReady);
       document.documentElement.style.removeProperty("--header-fg");
     };
   }, [reduced]);
@@ -245,36 +166,40 @@ export function HeroSection() {
       aria-label="The Appu film — from forest to table"
     >
       <div className="noise sticky top-0 h-screen overflow-hidden bg-cocoa">
-        {/* ── The film ── */}
-        {BEATS.map((b, i) => (
-          <div
-            key={b.image}
-            ref={(el) => {
-              beatRefs.current[i] = el;
-            }}
-            className="absolute inset-0 will-change-transform"
-            style={{ zIndex: N - i, opacity: i === 0 ? 1 : 0 }}
-          >
-            <Image
-              src={b.image}
-              alt=""
-              fill
-              sizes="100vw"
-              priority={i < 2}
-              className="object-cover"
-            />
-          </div>
-        ))}
+        {/* Instant first paint while the film buffers */}
+        <div
+          className={`absolute inset-0 transition-opacity duration-700 ${filmReady ? "opacity-0" : "opacity-100"}`}
+        >
+          <Image
+            src="/images/story/dawn.webp"
+            alt=""
+            fill
+            priority
+            sizes="100vw"
+            className="object-cover"
+          />
+        </div>
 
-        {/* ── Legibility scrim + floating dust (above the scene stack) ── */}
+        {/* ── The film ── */}
+        <video
+          ref={videoRef}
+          src="/videos/appu-film.mp4"
+          poster="/videos/appu-film-poster.jpg"
+          muted
+          playsInline
+          preload="auto"
+          className="absolute inset-0 h-full w-full object-cover"
+        />
+
+        {/* ── Legibility scrim + floating dust ── */}
         <div
           aria-hidden
-          className="absolute inset-0 z-[8] bg-gradient-to-t from-cocoa/90 via-cocoa/25 to-cocoa/40"
+          className="absolute inset-0 z-[8] bg-gradient-to-t from-cocoa/85 via-cocoa/20 to-cocoa/35"
         />
         <AmbientParticles count={14} className="z-[8]" />
 
         <AnimatePresence mode="wait">
-          {/* ── Beat 1: opening title ── */}
+          {/* ── Opening title ── */}
           {current.kind === "intro" && (
             <motion.div
               key="intro"
@@ -311,7 +236,7 @@ export function HeroSection() {
                 transition={{ delay: 1.2, duration: 1 }}
                 className="mt-6 max-w-md text-base text-parchment/60 md:text-lg"
               >
-                A short story, {years} years in the making.
+                A short film, {years} years in the making.
               </motion.p>
               <motion.div
                 initial={{ opacity: 0 }}
@@ -319,7 +244,7 @@ export function HeroSection() {
                 transition={{ delay: 1.6, duration: 1 }}
                 className="absolute bottom-8 flex flex-col items-center gap-2.5 text-parchment/45"
               >
-                <span className="eyebrow text-[0.6rem]">Scroll</span>
+                <span className="eyebrow text-[0.6rem]">Scroll to play</span>
                 <motion.div
                   animate={{ y: [0, 8, 0] }}
                   transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
@@ -330,10 +255,10 @@ export function HeroSection() {
             </motion.div>
           )}
 
-          {/* ── Story beats: minimal lower-third captions ── */}
+          {/* ── Story captions ── */}
           {current.kind === "story" && (
             <motion.div
-              key={current.image}
+              key={`story-${beat}`}
               initial={{ opacity: 0 }}
               animate={{ opacity: 1, transition: { duration: 0.25 } }}
               exit={{ opacity: 0, transition: { duration: 0.25 } }}
@@ -374,7 +299,7 @@ export function HeroSection() {
             </motion.div>
           )}
 
-          {/* ── Beat 6: the harvest — six treasures at a glance ── */}
+          {/* ── The table: six treasures ── */}
           {current.kind === "harvest" && (
             <motion.div
               key="harvest"
@@ -434,7 +359,7 @@ export function HeroSection() {
             </motion.div>
           )}
 
-          {/* ── Finale: headline + CTAs, parchment handoff ── */}
+          {/* ── Finale ── */}
           {current.kind === "finale" && (
             <motion.div
               key="finale"
@@ -500,9 +425,9 @@ export function HeroSection() {
 
         {/* ── Beat dots ── */}
         <div className="pointer-events-none absolute top-1/2 right-5 z-10 hidden -translate-y-1/2 flex-col gap-3 md:flex">
-          {BEATS.map((b, i) => (
+          {BEATS.map((_, i) => (
             <span
-              key={b.image}
+              key={i}
               className={`block size-1.5 rounded-full transition-all duration-500 ${
                 beat === i ? "scale-125 bg-terracotta" : "bg-parchment/30"
               }`}

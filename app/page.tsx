@@ -4,6 +4,7 @@ import { ThemeZone } from "@/components/home/theme-zone";
 import { LegacySection } from "@/components/home/legacy-section";
 import { SourcingSection } from "@/components/home/sourcing-section";
 import { CraftSection } from "@/components/home/craft-section";
+import { ShowcaseSection } from "@/components/home/showcase-section";
 import { FeaturedSection } from "@/components/home/featured-section";
 import { TestimonialsSection } from "@/components/home/testimonials-section";
 import { RecipesSection } from "@/components/home/recipes-section";
@@ -33,6 +34,7 @@ export default function HomePage() {
 
       <ThemeZone bg="#f6efe1" fg="#2b1d14">
         <CraftSection />
+        <ShowcaseSection />
         <FeaturedSection />
       </ThemeZone>
 

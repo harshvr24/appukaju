@@ -23,7 +23,7 @@ export function Footer() {
           </Link>
         </div>
 
-        <hr className="gold-hairline opacity-40" />
+        <hr className="gold-hairline origin-center opacity-40 [animation:divider-in_1.4s_var(--ease-out-expo)_both]" />
 
         {/* Link columns */}
         <div className="grid gap-12 py-16 sm:grid-cols-2 lg:grid-cols-[1.4fr_repeat(4,1fr)]">

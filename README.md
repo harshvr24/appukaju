@@ -61,7 +61,10 @@ Reusable, reduced-motion-aware building blocks — compose these instead of writ
 | `PinSection` | Pins children for N viewport-heights, exposes 0–1 progress via `--pin-progress` CSS var and `onProgress`; desktop-only by default | drop-in (the craft section's horizontal pin predates it) |
 | `VideoScrub` | Pins a `<video>` and scrubs `currentTime` with scroll (rAF-coalesced seeks, iOS play/pause priming); poster fallback for reduced motion | ready — drop an mp4 in `public/` and pass `src` |
 | `LazySection` | `content-visibility` paint skipping (SEO-safe default) or true deferred mounting (`mode="defer"`) | testimonials + recipes on `/` |
-| `Marquee` / `Counter` / `TiltCard` / `Magnetic` / `AmbientParticles` | Micro-interactions | various |
+| `CustomCursor` | Additive cursor dot + trailing ring; grows over interactives, shows micro-labels via `data-cursor="label:View"`; auto-disabled on touch/reduced-motion | whole app |
+| `Button` ripple | Pointer-down ripple from click point (`.btn-ripple` in globals) + hover lift on filled variants | all CTAs |
+| `ShowcaseSection` | Sticky product showcase: image pins (CSS sticky) while glass benefit cards scroll past; alternating layouts | homepage |
+| `Marquee` / `Counter` / `TiltCard` / `Magnetic` / `AmbientParticles` | Micro-interactions (marquee pauses on hover) | various |
 
 Every utility bails to static content under `prefers-reduced-motion`, and a global CSS gate in `globals.css` hard-caps animation durations as a second layer.
 

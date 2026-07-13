@@ -8,6 +8,7 @@ import { Footer } from "@/components/layout/footer";
 import { ScrollProgress } from "@/components/layout/scroll-progress";
 import { CartDrawer } from "@/components/shop/cart-drawer";
 import { SearchOverlay } from "@/components/shop/search-overlay";
+import { CustomCursor } from "@/components/shared/custom-cursor";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -74,6 +75,7 @@ export default function RootLayout({
             Skip to content
           </a>
           <ScrollProgress />
+          <CustomCursor />
           <Header />
           <NavOverlay />
           <CartDrawer />

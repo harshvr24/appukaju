@@ -33,7 +33,10 @@ export function ProductCard({ product, className, size = "default" }: ProductCar
 
   return (
     <TiltCard className={className}>
-      <article className="group relative flex h-full flex-col overflow-hidden rounded-sm border border-forest/10 bg-paper shadow-soft transition-shadow duration-700 hover:shadow-lift">
+      <article
+        data-cursor="label:View"
+        className="group relative flex h-full flex-col overflow-hidden rounded-sm border border-forest/10 bg-paper shadow-soft transition-[transform,box-shadow,border-color] duration-700 ease-(--ease-out-expo) hover:-translate-y-1.5 hover:border-terracotta/30 hover:shadow-lift"
+      >
         <Link
           href={`/products/${product.slug}`}
           className="absolute inset-0 z-10"

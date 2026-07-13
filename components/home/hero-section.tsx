@@ -144,17 +144,43 @@ export function HeroSection() {
         const p = self.progress;
         setHeaderOnDark(p < 0.97);
 
+        // Zoom-through: the active scene (on top) pushes toward the viewer,
+        // blurring and dissolving as the next scene rises from behind.
+        const wide = window.innerWidth >= 1024;
         for (let i = 0; i < N; i++) {
           const el = beatRefs.current[i];
           if (!el) continue;
           const start = i * SPAN;
-          const opacity = i === 0 ? 1 : smoothstep(start - 0.03, start + 0.015, p);
-          const drift = Math.min(1, Math.max(0, (p - start + SPAN) / (SPAN * 2.2)));
-          gsap.set(el, {
-            opacity,
-            scale: 1.12 - 0.12 * drift,
-            visibility: opacity <= 0.001 ? "hidden" : "visible",
-          });
+          const t = (p - start) / SPAN;
+          const isFinale = i === N - 1;
+
+          if (t < 0) {
+            // Approaching behind the glass of the active scene.
+            const u = Math.min(1, Math.max(0, t + 1));
+            gsap.set(el, {
+              opacity: 1,
+              scale: 0.94 + 0.06 * u,
+              filter: "none",
+              visibility: u <= 0.001 ? "hidden" : "visible",
+            });
+          } else if (t <= 1 || isFinale) {
+            if (isFinale) {
+              gsap.set(el, { opacity: 1, scale: 1, filter: "none", visibility: "visible" });
+            } else {
+              const tc = Math.min(1, t);
+              const zoom = tc * tc; // accelerating push into the frame
+              const opacity = 1 - smoothstep(0.72, 0.98, tc);
+              const blur = wide ? smoothstep(0.6, 1, tc) * 5 : 0;
+              gsap.set(el, {
+                opacity,
+                scale: 1 + zoom * 0.5,
+                filter: blur > 0.05 ? `blur(${blur.toFixed(2)}px)` : "none",
+                visibility: opacity <= 0.001 ? "hidden" : "visible",
+              });
+            }
+          } else {
+            gsap.set(el, { opacity: 0, visibility: "hidden" });
+          }
         }
 
         const idx = Math.min(N - 1, Math.floor(p / SPAN));
@@ -191,7 +217,7 @@ export function HeroSection() {
               beatRefs.current[i] = el;
             }}
             className="absolute inset-0 will-change-transform"
-            style={{ opacity: i === 0 ? 1 : 0 }}
+            style={{ zIndex: N - i, opacity: i === 0 ? 1 : 0 }}
           >
             <Image
               src={b.image}
@@ -204,12 +230,12 @@ export function HeroSection() {
           </div>
         ))}
 
-        {/* ── Legibility scrim + floating dust ── */}
+        {/* ── Legibility scrim + floating dust (above the scene stack) ── */}
         <div
           aria-hidden
-          className="absolute inset-0 bg-gradient-to-t from-cocoa/90 via-cocoa/25 to-cocoa/40"
+          className="absolute inset-0 z-[8] bg-gradient-to-t from-cocoa/90 via-cocoa/25 to-cocoa/40"
         />
-        <AmbientParticles count={14} />
+        <AmbientParticles count={14} className="z-[8]" />
 
         <AnimatePresence mode="wait">
           {/* ── Beat 1: opening title ── */}

@@ -22,7 +22,9 @@ export const metadata: Metadata = {
 export default function HomePage() {
   return (
     <>
-      <HeroSection />
+      <ThemeZone bg="#1c120b" fg="#f6efe1">
+        <HeroSection />
+      </ThemeZone>
 
       <ThemeZone bg="#f6efe1" fg="#2b1d14">
         <LegacySection />

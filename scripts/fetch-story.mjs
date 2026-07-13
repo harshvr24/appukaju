@@ -43,6 +43,36 @@ const SCENES = [
     "A magical miniature orchard glowing inside warm light: flourishing cashew trees with red cashew apples, almond branches, pistachio clusters, grape vines with golden raisins, tilt-shift macro" + MOOD,
     905,
   ],
+  [
+    "tree",
+    "An Indian elephant's trunk gently reaching up toward ripe red cashew apples with grey cashew nuts hanging from a cashew tree branch, lush green leaves" + MOOD,
+    1001,
+  ],
+  [
+    "fruit",
+    "Macro close-up of one ripe red cashew apple with its raw grey cashew nut attached, hanging from a branch, dew drops, soft green forest bokeh" + MOOD,
+    1002,
+  ],
+  [
+    "harvest",
+    "Woven cane baskets heaped with ripe red cashew apples and raw cashew nuts standing on rich red plantation earth between cashew trees" + MOOD,
+    1003,
+  ],
+  [
+    "cleaning",
+    "Raw ivory cashew kernels spread on clean steel drying trays, fine water droplets glistening, bright airy processing room with daylight" + MOOD,
+    1004,
+  ],
+  [
+    "inspection",
+    "Ivory cashew kernels laid out in neat graded rows on a pale wooden sorting table under a daylight lamp, one kernel under a magnifying glass" + MOOD,
+    1005,
+  ],
+  [
+    "roasting",
+    "Golden cashews tumbling inside a warm-lit vintage drum roaster, gentle wisps of aromatic smoke, embers of warm light" + MOOD,
+    1006,
+  ],
 ];
 
 const exists = (f) => access(f).then(() => true, () => false);
